@@ -8,7 +8,7 @@ const recipes = [
 function generateRecipe() {
     const ingredient = document.getElementById("ingredient").value.toLowerCase();
 
-    // Filter recipes based on category and ingredient
+    // Filter recipes based on ingredient
     const filteredRecipes = recipes.filter(recipe => 
         (ingredient === '' || recipe.ingredients.some(i => i.toLowerCase().includes(ingredient)))
     );

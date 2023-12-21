@@ -9,41 +9,26 @@
 <body>
     <h1>Prūšu receptes</h1>
 
-    <label for="category">Select Category:</label>
-    <select id="category">
-        <option value="all">All</option>
-        <option value="breakfast">Breakfast</option>
-        <option value="dinner">Dinner</option>
-        <option value="dessert">Dessert</option>
-    </select>
-
-    <label for="ingredient">Enter Ingredient:</label>
+    <label for="ingredient">Ievadi sastāvdaļu:</label>
     <input type="text" id="ingredient">
 
-    <button onclick="generateRecipe()">Generate Recipe</button>
+    <button onclick="generateRecipe()">Atrast recepti</button>
 
     <div id="result"></div>
 	
 	<section id="add-recipe">
-    <h2>Add a New Recipe</h2>
+    <h2>Pievienot jaunu recepti</h2>
     <form onsubmit="addRecipe(event)">
-        <label for="new-title">Title:</label>
+        <label for="new-title">Nosaukums:</label>
         <input type="text" id="new-title" required>
 
-        <label for="new-category">Category:</label>
-        <select id="new-category" required>
-            <option value="breakfast">Breakfast</option>
-            <option value="dinner">Dinner</option>
-            <option value="dessert">Dessert</option>
-        </select>
-
-        <label for="new-ingredients">Ingredients (comma-separated):</label>
+        <label for="new-ingredients">Sastāvdaļas, atdalītas ar komatu:</label>
         <input type="text" id="new-ingredients" required>
 
-        <label for="new-steps">Prepping Steps (comma-separated):</label>
+        <label for="new-steps">Soļi, atdalīti ar komatu:</label>
         <input type="text" id="new-steps" required>
 
-        <button type="submit">Add Recipe</button>
+        <button type="submit">Pievienot recepti</button>
     </form>
 </section>
 </body>

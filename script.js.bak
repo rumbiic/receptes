@@ -55,6 +55,7 @@ function addRecipe(event) {
 
     alert("Recepte veiksmīgi pievienota!");
 }
+
 function addRow(tableId) {
     const table = document.getElementById(tableId);
     const newRow = table.insertRow(-1);

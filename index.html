@@ -4,8 +4,143 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prūšu receptes</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+    <script>
+	// Add your recipes here
+const recipes = [
+    { title: 'Rīsi ar pupiņu-kukurūzas mērci', ingredients: ['Rīsi 1 paciņa', 'Pupiņas 1 bundža', 'Kukurūza 1 maza bundža', 'Tomātu mērce 1/2 Spilva', 'Šampinjoni 200g'], steps: ['Liekam vārīties rīsus sālsūdenī', 'Uz pannas apcepam sagrieztus šampinjonus', 'Pievienojam pupiņas, kukurūzu un nedaudz apcepjam', 'Pievienojam tomātu mērci', 'Kad rīsi gatavi, pasniedzam'] },
+    { title: 'Pelmeņi ar sinepju-etiķa mērci', ingredients: ['Pelmeņi 1 paka', 'Sinepes bišķi', 'Etiķis bišķi'], steps: ['Uzvārām pelmeņus', 'Pēc garšas sajaucam sinepes ar etiķi'] },
+    // Add more recipes as needed
+];
+
+function generateRecipe() {
+    const ingredient = document.getElementById("ingredient").value.toLowerCase();
+
+    // Filter recipes based on ingredient
+    const filteredRecipes = recipes.filter(recipe => 
+        (ingredient === '' || recipe.ingredients.some(i => i.toLowerCase().includes(ingredient)))
+    );
+
+    if (filteredRecipes.length > 0) {
+        // Pick a random recipe from the filtered list
+        const randomRecipe = filteredRecipes[Math.floor(Math.random() * filteredRecipes.length)];
+
+        // Display the recipe details
+        document.getElementById("result").innerHTML = `
+            <h2>${randomRecipe.title}</h2>
+            <p>Sastāvdaļas: ${randomRecipe.ingredients.join(', ')}</p>
+            <p>Soļi: ${randomRecipe.steps.join(', ')}</p>
+        `;
+    } else {
+        document.getElementById("result").innerHTML = "Tādu recepšu vēl nav.";
+    }
+	const resultElement = document.getElementById("result");
+    resultElement.innerHTML = `
+        <h2>${randomRecipe.title}</h2>
+        <h3>Sastāvdaļas:</h3>
+        <ul>${randomRecipe.ingredients.map(ingredient => `<li><input type="checkbox">${ingredient}</li>`).join('')}</ul>
+        <h3>Soļi:</h3>
+        <ol>${randomRecipe.steps.map(step => `<li><input type="checkbox">${step}</li>`).join('')}</ol>
+    `;
+}
+
+function addRecipe(event) {
+    event.preventDefault();
+
+    const newTitle = document.getElementById("new-title").value;
+    const newIngredients = document.getElementById("new-ingredients").value.split(',').map(i => i.trim());
+    const newSteps = document.getElementById("new-steps").value.split(',').map(s => s.trim());
+
+    // Validate inputs
+    if (!newTitle || newIngredients.length === 0 || newSteps.length === 0) {
+        alert("Aizpildi visus laukus");
+        return;
+    }
+
+    // Add the new recipe to the recipes array
+    recipes.push({
+        title: newTitle,
+        ingredients: newIngredients,
+        steps: newSteps
+    });
+
+    // Clear the form inputs
+    document.getElementById("new-title").value = '';
+    document.getElementById("new-ingredients").value = '';
+    document.getElementById("new-steps").value = '';
+
+    alert("Recepte veiksmīgi pievienota!");
+}
+
+function addRow(tableId) {
+    const table = document.getElementById(tableId);
+
+    if (table) {
+        const newRow = table.insertRow(-1);
+
+        if (tableId === 'ingredients-table') {
+            const cell1 = newRow.insertCell(0);
+            const cell2 = newRow.insertCell(1);
+            cell1.innerHTML = '<input type="text" class="ingredient-input" placeholder="Sastāvdaļa">';
+            cell2.innerHTML = '<input type="text" class="quantity-input" placeholder="Daudzums">';
+        } else if (tableId === 'steps-list') {
+            const cell = newRow.insertCell(0);
+            cell.innerHTML = `<input type="text" class="step-input" placeholder="Soļa apraksts">`;
+        }
+    }
+}
+	</script>
+	<style>
+	body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+header {
+    text-align: center;
+}
+
+.section-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.randomizer-section,
+.recipe-input-section {
+    width: 48%; /* 48% to leave some space between sections */
+    background-color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+h1, h2, h3 {
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+button {
+    display: block;
+    margin-top: 10px;
+}
+.step-input {
+    width: 100%;
+}
+input {
+    height: 30px; /* Adjust the height as needed */
+}
+	</style>
 </head>
 <body>
     <div class="container">
@@ -71,6 +206,26 @@
                 <button type="submit">Pievienot recepti</button>
             </form>
         </div>
+		<div id="recipe-list">
+    <h2>Recepšu saraksts</h2>
+    <ul id="recipe-list-ul">
+        <!-- Recipes will be dynamically added here -->
+    </ul>
+</div>
+
+<script>
+// Function to display the list of recipes
+function displayRecipeList() {
+    const recipeListUl = document.getElementById("recipe-list-ul");
+    recipeListUl.innerHTML = recipes.map((recipe, index) => `<li>${recipe.title} <button onclick="deleteRecipe(${index})">Dzēst</button></li>`).join('');
+}
+
+// Function to delete a recipe
+function deleteRecipe(index) {
+    recipes.splice(index, 1);
+    displayRecipeList();
+}
+</script>
     </div>
 </body>
 </html>

@@ -29,3 +29,34 @@ function generateRecipe() {
         document.getElementById("result").innerHTML = "No matching recipes found.";
     }
 }
+
+function addRecipe(event) {
+    event.preventDefault();
+
+    const newTitle = document.getElementById("new-title").value;
+    const newCategory = document.getElementById("new-category").value;
+    const newIngredients = document.getElementById("new-ingredients").value.split(',').map(i => i.trim());
+    const newSteps = document.getElementById("new-steps").value.split(',').map(s => s.trim());
+
+    // Validate inputs
+    if (!newTitle || !newCategory || newIngredients.length === 0 || newSteps.length === 0) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    // Add the new recipe to the recipes array
+    recipes.push({
+        title: newTitle,
+        category: newCategory,
+        ingredients: newIngredients,
+        steps: newSteps
+    });
+
+    // Clear the form inputs
+    document.getElementById("new-title").value = '';
+    document.getElementById("new-category").value = 'breakfast';
+    document.getElementById("new-ingredients").value = '';
+    document.getElementById("new-steps").value = '';
+
+    alert("Recipe added successfully!");
+}

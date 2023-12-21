@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe Generator</title>
+    <title>Prūšu receptes</title>
     <script src="script.js" defer></script>
 </head>
 <body>
-    <h1>Recipe Generator</h1>
+    <h1>Prūšu receptes</h1>
 
     <label for="category">Select Category:</label>
     <select id="category">
@@ -23,5 +23,28 @@
     <button onclick="generateRecipe()">Generate Recipe</button>
 
     <div id="result"></div>
+	
+	<section id="add-recipe">
+    <h2>Add a New Recipe</h2>
+    <form onsubmit="addRecipe(event)">
+        <label for="new-title">Title:</label>
+        <input type="text" id="new-title" required>
+
+        <label for="new-category">Category:</label>
+        <select id="new-category" required>
+            <option value="breakfast">Breakfast</option>
+            <option value="dinner">Dinner</option>
+            <option value="dessert">Dessert</option>
+        </select>
+
+        <label for="new-ingredients">Ingredients (comma-separated):</label>
+        <input type="text" id="new-ingredients" required>
+
+        <label for="new-steps">Prepping Steps (comma-separated):</label>
+        <input type="text" id="new-steps" required>
+
+        <button type="submit">Add Recipe</button>
+    </form>
+</section>
 </body>
 </html>

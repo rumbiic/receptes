@@ -73,7 +73,7 @@ function addRow(tableId) {
     const table = document.getElementById(tableId);
 
     if (table) {
-        const newRow = table.insertRow(-1);
+        const newRow = table.insertRow(table.rows.length);
 
         if (tableId === 'ingredients-table') {
             const cell1 = newRow.insertCell(0);
@@ -137,6 +137,13 @@ button {
 }
 input {
     height: 30px; /* Adjust the height as needed */
+}
+.full-width-section {
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-top: 20px; /* Adjust as needed */
 }
 	</style>
 </head>
@@ -211,7 +218,7 @@ input {
                 <button type="submit">Pievienot recepti</button>
             </form>
         </div>
-		<div id="recipe-list">
+		<div id="recipe-list" class="full-width-section">
     <h2>Recepšu saraksts</h2>
     <ul id="recipe-list-ul">
         <!-- Recipes will be dynamically added here -->

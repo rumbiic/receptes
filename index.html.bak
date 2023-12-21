@@ -4,32 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prūšu receptes</title>
+    <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
 </head>
 <body>
-    <h1>Prūšu receptes</h1>
+    <div class="container">
+        <div class="randomizer">
+            <h1>Prūšu receptes</h1>
+            <label for="ingredient">Ievadi sastāvdaļu:</label>
+            <input type="text" id="ingredient">
+            <button onclick="generateRecipe()">Atrast recepti</button>
+            <div id="result"></div>
+        </div>
 
-    <label for="ingredient">Ievadi sastāvdaļu:</label>
-    <input type="text" id="ingredient">
+        <div class="recipe-input">
+            <h2>Pievienot jaunu recepti</h2>
+            <form onsubmit="addRecipe(event)">
+                <label for="new-title">Nosaukums:</label>
+                <input type="text" id="new-title" required>
 
-    <button onclick="generateRecipe()">Atrast recepti</button>
+                <div id="ingredients-section">
+                    <h3>Sastāvdaļas:</h3>
+                    <table id="ingredients-table">
+                        <!-- Initial rows for ingredients -->
+                        <tr>
+                            <td><input type="text" class="ingredient-input" placeholder="Sastāvdaļa"></td>
+                            <td><input type="text" class="quantity-input" placeholder="Daudzums"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="ingredient-input" placeholder="Sastāvdaļa"></td>
+                            <td><input type="text" class="quantity-input" placeholder="Daudzums"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="ingredient-input" placeholder="Sastāvdaļa"></td>
+                            <td><input type="text" class="quantity-input" placeholder="Daudzums"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="ingredient-input" placeholder="Sastāvdaļa"></td>
+                            <td><input type="text" class="quantity-input" placeholder="Daudzums"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="ingredient-input" placeholder="Sastāvdaļa"></td>
+                            <td><input type="text" class="quantity-input" placeholder="Daudzums"></td>
+                        </tr>
+                    </table>
+                    <button type="button" onclick="addRow('ingredients-table')">Pievienot vēl</button>
+                </div>
 
-    <div id="result"></div>
-	
-	<section id="add-recipe">
-    <h2>Pievienot jaunu recepti</h2>
-    <form onsubmit="addRecipe(event)">
-        <label for="new-title">Nosaukums:</label>
-        <input type="text" id="new-title" required>
+                <div id="steps-section">
+                    <h3>Soļi:</h3>
+                    <ol id="steps-list">
+                        <!-- Initial steps rows -->
+                        <li><input type="text" class="step-input" placeholder="Soļa apraksts"></li>
+                        <li><input type="text" class="step-input" placeholder="Soļa apraksts"></li>
+                        <li><input type="text" class="step-input" placeholder="Soļa apraksts"></li>
+                        <li><input type="text" class="step-input" placeholder="Soļa apraksts"></li>
+                        <li><input type="text" class="step-input" placeholder="Soļa apraksts"></li>
+                    </ol>
+                    <button type="button" onclick="addRow('steps-list')">Pievienot vēl</button>
+                </div>
 
-        <label for="new-ingredients">Sastāvdaļas, atdalītas ar komatu:</label>
-        <input type="text" id="new-ingredients" required>
-
-        <label for="new-steps">Soļi, atdalīti ar komatu:</label>
-        <input type="text" id="new-steps" required>
-
-        <button type="submit">Pievienot recepti</button>
-    </form>
-	</section>
+                <button type="submit">Pievienot recepti</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

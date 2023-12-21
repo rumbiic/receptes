@@ -9,17 +9,21 @@
 </head>
 <body>
     <div class="container">
-        <div class="randomizer">
+        <header>
             <h1>Prūšu receptes</h1>
-            <label for="ingredient">Ievadi sastāvdaļu:</label>
-            <input type="text" id="ingredient">
-            <button onclick="generateRecipe()">Atrast recepti</button>
-            <div id="result"></div>
-        </div>
+        </header>
 
-        <div class="recipe-input">
-            <h2>Pievienot jaunu recepti</h2>
-            <form onsubmit="addRecipe(event)">
+        <div class="section-container">
+            <div class="randomizer-section">
+                <label for="ingredient">Ievadi sastāvdaļu:</label>
+                <input type="text" id="ingredient">
+                <button onclick="generateRecipe()">Atrast recepti</button>
+                <div id="result"></div>
+            </div>
+
+            <div class="recipe-input-section">
+                <h2>Pievienot jaunu recepti</h2>
+                <form onsubmit="addRecipe(event)">
                 <label for="new-title">Nosaukums:</label>
                 <input type="text" id="new-title" required>
 

@@ -5,147 +5,133 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prūšu receptes</title>
     <script>
-	// Add your recipes here
-const recipes = [
-    { title: 'Rīsi ar pupiņu-kukurūzas mērci', ingredients: ['Rīsi 1 paciņa', 'Pupiņas 1 bundža', 'Kukurūza 1 maza bundža', 'Tomātu mērce 1/2 Spilva', 'Šampinjoni 200g'], steps: ['Liekam vārīties rīsus sālsūdenī', 'Uz pannas apcepam sagrieztus šampinjonus', 'Pievienojam pupiņas, kukurūzu un nedaudz apcepjam', 'Pievienojam tomātu mērci', 'Kad rīsi gatavi, pasniedzam'] },
-    { title: 'Pelmeņi ar sinepju-etiķa mērci', ingredients: ['Pelmeņi 1 paka', 'Sinepes bišķi', 'Etiķis bišķi'], steps: ['Uzvārām pelmeņus', 'Pēc garšas sajaucam sinepes ar etiķi'] },
-    // Add more recipes as needed
-];
+        // Add your recipes here
+        const recipes = [
+            { title: 'Rīsi ar pupiņu-kukurūzas mērci', ingredients: ['Rīsi 1 paciņa', 'Pupiņas 1 bundža', 'Kukurūza 1 maza bundža', 'Tomātu mērce 1/2 Spilva', 'Šampinjoni 200g'], steps: ['Liekam vārīties rīsus sālsūdenī', 'Uz pannas apcepam sagrieztus šampinjonus', 'Pievienojam pupiņas, kukurūzu un nedaudz apcepjam', 'Pievienojam tomātu mērci', 'Kad rīsi gatavi, pasniedzam'] },
+            { title: 'Pelmeņi ar sinepju-etiķa mērci', ingredients: ['Pelmeņi 1 paka', 'Sinepes bišķi', 'Etiķis bišķi'], steps: ['Uzvārām pelmeņus', 'Pēc garšas sajaucam sinepes ar etiķi'] },
+            // Add more recipes as needed
+        ];
 
-function generateRecipe() {
-    const ingredient1 = document.getElementById("ingredient1").value.toLowerCase();
-    const ingredient2 = document.getElementById("ingredient2").value.toLowerCase();
-    const ingredient3 = document.getElementById("ingredient3").value.toLowerCase();
+        function generateRecipe() {
+            const ingredient1 = document.getElementById("ingredient1").value.toLowerCase();
+            const ingredient2 = document.getElementById("ingredient2").value.toLowerCase();
+            const ingredient3 = document.getElementById("ingredient3").value.toLowerCase();
 
-    // Filter recipes based on multiple ingredients
-    const filteredRecipes = recipes.filter(recipe =>
-        (ingredient1 === '' || recipe.ingredients.some(i => i.toLowerCase().includes(ingredient1))) &&
-        (ingredient2 === '' || recipe.ingredients.some(i => i.toLowerCase().includes(ingredient2))) &&
-        (ingredient3 === '' || recipe.ingredients.some(i => i.toLowerCase().includes(ingredient3)))
-    );
+            // Filter recipes based on multiple ingredients
+            const filteredRecipes = recipes.filter(recipe =>
+                (ingredient1 === '' || recipe.ingredients.some(i => i.toLowerCase().includes(ingredient1))) &&
+                (ingredient2 === '' || recipe.ingredients.some(i => i.toLowerCase().includes(ingredient2))) &&
+                (ingredient3 === '' || recipe.ingredients.some(i => i.toLowerCase().includes(ingredient3)))
+            );
 
-    if (filteredRecipes.length > 0) {
-        // Pick a random recipe from the filtered list
-        const randomRecipe = filteredRecipes[Math.floor(Math.random() * filteredRecipes.length)];
+            if (filteredRecipes.length > 0) {
+                // Pick a random recipe from the filtered list
+                const randomRecipe = filteredRecipes[Math.floor(Math.random() * filteredRecipes.length)];
 
-        // Display the recipe details
-        document.getElementById("result").innerHTML = `
-            <h2>${randomRecipe.title}</h2>
-            <h3>Sastāvdaļas:</h3>
-            <ul>${randomRecipe.ingredients.map(ingredient => `<li><input type="checkbox">${ingredient}</li>`).join('')}</ul>
-            <h3>Soļi:</h3>
-            <ol>${randomRecipe.steps.map(step => `<li><input type="checkbox">${step}</li>`).join('')}</ol>
-        `;
-    } else {
-        document.getElementById("result").innerHTML = "Tādu recepšu vēl nav.";
-    }
-}
-
-function addRecipe(event) {
-    event.preventDefault();
-
-    const newTitle = document.getElementById("new-title").value;
-    const newIngredients = document.getElementById("new-ingredients").value.split(',').map(i => i.trim());
-    const newSteps = document.getElementById("new-steps").value.split(',').map(s => s.trim());
-
-    // Validate inputs
-    if (!newTitle || newIngredients.length === 0 || newSteps.length === 0) {
-        alert("Aizpildi visus laukus");
-        return;
-    }
-
-    // Add the new recipe to the recipes array
-    recipes.push({
-        title: newTitle,
-        ingredients: newIngredients,
-        steps: newSteps
-    });
-
-    // Clear the form inputs
-    document.getElementById("new-title").value = '';
-    document.getElementById("new-ingredients").value = '';
-    document.getElementById("new-steps").value = '';
-
-    alert("Recepte veiksmīgi pievienota!");
-}
-
-function addRow(tableId) {
-    const table = document.getElementById(tableId);
-
-    if (table) {
-        const newRow = table.insertRow(table.rows.length);
-
-        if (tableId === 'ingredients-table') {
-            const cell1 = newRow.insertCell(0);
-            const cell2 = newRow.insertCell(1);
-            cell1.innerHTML = '<input type="text" class="ingredient-input" placeholder="Sastāvdaļa">';
-            cell2.innerHTML = '<input type="text" class="quantity-input" placeholder="Daudzums">';
-        } else if (tableId === 'steps-list') {
-            const cell = newRow.insertCell(0);
-            cell.innerHTML = `<input type="text" class="step-input" placeholder="Soļa apraksts">`;
+                // Display the recipe details
+                document.getElementById("result").innerHTML = `
+                    <h2>${randomRecipe.title}</h2>
+                    <h3>Sastāvdaļas:</h3>
+                    <ul>${randomRecipe.ingredients.map(ingredient => `<li><input type="checkbox">${ingredient}</li>`).join('')}</ul>
+                    <h3>Soļi:</h3>
+                    <ol>${randomRecipe.steps.map(step => `<li><input type="checkbox">${step}</li>`).join('')}</ol>
+                `;
+            } else {
+                document.getElementById("result").innerHTML = "Tādu recepšu vēl nav.";
+            }
         }
-    }
-}
-	</script>
-	<style>
-	body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f5f5f5;
-}
 
-.container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px;
-    box-sizing: border-box;
-}
+        function addRecipe(event) {
+            event.preventDefault();
 
-header {
-    text-align: center;
-}
+            // Add debugging statements to identify the issue
+            const newTitleElement = document.getElementById("new-title");
+            console.log("newTitleElement:", newTitleElement);
 
-.section-container {
-    display: flex;
-    justify-content: space-between;
-}
+            const newIngredientsElement = document.getElementById("new-ingredients");
+            console.log("newIngredientsElement:", newIngredientsElement);
 
-.randomizer-section,
-.recipe-input-section {
-    width: 48%; /* 48% to leave some space between sections */
-    background-color: #fff;
-    padding: 20px;
-    box-sizing: border-box;
-}
+            const newStepsElement = document.getElementById("new-steps");
+            console.log("newStepsElement:", newStepsElement);
 
-h1, h2, h3 {
-    text-align: center;
-}
+            // Rest of the code...
+        }
 
-table {
-    width: 100%;
-    margin-bottom: 10px;
-}
+        function addRow(tableId) {
+            const table = document.getElementById(tableId);
 
-button {
-    display: block;
-    margin-top: 10px;
-}
-.step-input {
-    width: 100%;
-}
-input {
-    height: 30px; /* Adjust the height as needed */
-}
-.full-width-section {
-    width: 100%;
-    background-color: #fff;
-    padding: 20px;
-    box-sizing: border-box;
-    margin-top: 20px; /* Adjust as needed */
-}
-	</style>
+            if (table) {
+                const newRow = table.insertRow(-1);
+
+                if (tableId === 'ingredients-table') {
+                    const cell1 = newRow.insertCell(0);
+                    const cell2 = newRow.insertCell(1);
+                    cell1.innerHTML = '<input type="text" class="ingredient-input" placeholder="Sastāvdaļa">';
+                    cell2.innerHTML = '<input type="text" class="quantity-input" placeholder="Daudzums">';
+                } else if (tableId === 'steps-list') {
+                    const cell = newRow.insertCell(0);
+                    cell.innerHTML = `<input type="text" class="step-input" placeholder="Soļa apraksts">`;
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        header {
+            text-align: center;
+        }
+
+        .section-container {
+            display: flex;
+            flex-direction: column; /* Adjusted to column layout */
+        }
+
+        .randomizer-section,
+        .recipe-input-section,
+        .recipe-list-section {
+            width: 100%; /* Adjusted to full width for better visibility */
+            background-color: #fff;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-bottom: 20px; /* Added space between sections */
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        button {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .step-input {
+            width: 100%;
+        }
+
+        input {
+            height: 30px; /* Adjust the height as needed */
+            margin-bottom: 10px; /* Added space between inputs */
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -155,89 +141,94 @@ input {
 
         <div class="section-container">
             <div class="randomizer-section">
-    <label for="ingredient1">Ievadi sastāvdaļu:</label>
-    <input type="text" id="ingredient1">
+                <label for="ingredient1">Ievadi sastāvdaļu:</label>
+                <input type="text" id="ingredient1">
 
-    <label for="ingredient2">Ievadi sastāvdaļu:</label>
-    <input type="text" id="ingredient2">
+                <label for="ingredient2">Ievadi sastāvdaļu:</label>
+                <input type="text" id="ingredient2">
 
-    <label for="ingredient3">Ievadi sastāvdaļu:</label>
-    <input type="text" id="ingredient3">
+                <label for="ingredient3">Ievadi sastāvdaļu:</label>
+                <input type="text" id="ingredient3">
 
-    <button onclick="generateRecipe()">Atrast recepti</button>
-    <div id="result"></div>
-</div>
+                <button onclick="generateRecipe()">Atrast recepti</button>
+                <div id="result"></div>
+            </div>
 
             <div class="recipe-input-section">
                 <h2>Pievienot jaunu recepti</h2>
                 <form onsubmit="addRecipe(event)">
-                <label for="new-title">Nosaukums:</label>
-                <input type="text" id="new-title" required>
+                    <label for="new-title">Nosaukums:</label>
+                    <input type="text" id="new-title" required>
 
-                <div id="ingredients-section">
-                    <h3>Sastāvdaļas:</h3>
-                    <table id="ingredients-table">
-                        <!-- Initial rows for ingredients -->
-                        <tr>
-                            <td><input type="text" class="ingredient-input" placeholder="Sastāvdaļa"></td>
-                            <td><input type="text" class="quantity-input" placeholder="Daudzums"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" class="ingredient-input" placeholder="Sastāvdaļa"></td>
-                            <td><input type="text" class="quantity-input" placeholder="Daudzums"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" class="ingredient-input" placeholder="Sastāvdaļa"></td>
-                            <td><input type="text" class="quantity-input" placeholder="Daudzums"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" class="ingredient-input" placeholder="Sastāvdaļa"></td>
-                            <td><input type="text" class="quantity-input" placeholder="Daudzums"></td>
-                        </tr>
-                        <tr>
-                            <td><input type="text" class="ingredient-input" placeholder="Sastāvdaļa"></td>
-                            <td><input type="text" class="quantity-input" placeholder="Daudzums"></td>
-                        </tr>
-                    </table>
-                    <button type="button" onclick="addRow('ingredients-table')">Pievienot vēl</button>
-                </div>
+                    <div id="ingredients-section">
+                        <h3>Sastāvdaļas:</h3>
+                        <table id="ingredients-table">
+                            <!-- Initial rows for ingredients -->
+                            <tr>
+                                <td><input type="text" class="ingredient-input" placeholder="Sastāvdaļa"></td>
+                                <td><input type="text" class="quantity-input" placeholder="Daudzums"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="ingredient-input" placeholder="Sastāvdaļa"></td>
+                                <td><input type="text" class="quantity-input" placeholder="Daudzums"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="ingredient-input" placeholder="Sastāvdaļa"></td>
+                                <td><input type="text" class="quantity-input" placeholder="Daudzums"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="ingredient-input" placeholder="Sastāvdaļa"></td>
+                                <td><input type="text" class="quantity-input" placeholder="Daudzums"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="ingredient-input" placeholder="Sastāvdaļa"></td>
+                                <td><input type="text" class="quantity-input" placeholder="Daudzums"></td>
+                            </tr>
+                        </table>
+                        <button type="button" onclick="addRow('ingredients-table')">Pievienot vēl</button>
+                    </div>
 
-                <div id="steps-section">
-                    <h3>Soļi:</h3>
-                    <ol id="steps-list">
-                        <!-- Initial steps rows -->
-                        <li><input type="text" class="step-input" placeholder="Soļa apraksts"></li>
-                        <li><input type="text" class="step-input" placeholder="Soļa apraksts"></li>
-                        <li><input type="text" class="step-input" placeholder="Soļa apraksts"></li>
-                        <li><input type="text" class="step-input" placeholder="Soļa apraksts"></li>
-                        <li><input type="text" class="step-input" placeholder="Soļa apraksts"></li>
-                    </ol>
-                    <button type="button" onclick="addRow('steps-list')">Pievienot vēl</button>
-                </div>
+                    <div id="steps-section">
+                        <h3>Soļi:</h3>
+                        <ol id="steps-list">
+                            <!-- Initial steps rows -->
+                            <li><input type="text" class="step-input" placeholder="Soļa apraksts"></li>
+                            <li><input type="text" class="step-input" placeholder="Soļa apraksts"></li>
+                            <li><input type="text" class="step-input" placeholder="Soļa apraksts"></li>
+                            <li><input type="text" class="step-input" placeholder="Soļa apraksts"></li>
+                            <li><input type="text" class="step-input" placeholder="Soļa apraksts"></li>
+                        </ol>
+                        <button type="button" onclick="addRow('steps-list')">Pievienot vēl</button>
+                    </div>
 
-                <button type="submit">Pievienot recepti</button>
-            </form>
+                    <button type="submit">Pievienot recepti</button>
+                </form>
+            </div>
+
+            <div class="recipe-list-section">
+                <h2>Recepšu saraksts</h2>
+                <ul id="recipe-list-ul">
+                    <!-- Recipes will be dynamically added here -->
+                </ul>
+            </div>
         </div>
-		<div id="recipe-list" class="full-width-section">
-    <h2>Recepšu saraksts</h2>
-    <ul id="recipe-list-ul">
-        <!-- Recipes will be dynamically added here -->
-    </ul>
-</div>
 
-<script>
-// Function to display the list of recipes
-function displayRecipeList() {
-    const recipeListUl = document.getElementById("recipe-list-ul");
-    recipeListUl.innerHTML = recipes.map((recipe, index) => `<li>${recipe.title} <button onclick="deleteRecipe(${index})">Dzēst</button></li>`).join('');
-}
+        <script>
+            // Function to display the list of recipes
+            function displayRecipeList() {
+                const recipeListUl = document.getElementById("recipe-list-ul");
+                recipeListUl.innerHTML = recipes.map((recipe, index) => `<li>${recipe.title} <button onclick="deleteRecipe(${index})">Dzēst</button></li>`).join('');
+            }
 
-// Function to delete a recipe
-function deleteRecipe(index) {
-    recipes.splice(index, 1);
-    displayRecipeList();
-}
-</script>
+            // Function to delete a recipe
+            function deleteRecipe(index) {
+                recipes.splice(index, 1);
+                displayRecipeList();
+            }
+
+            // Initial display of the recipe list
+            displayRecipeList();
+        </script>
     </div>
 </body>
 </html>

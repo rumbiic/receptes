@@ -13,33 +13,49 @@
         ];
 
         function generateRecipe() {
-            const ingredient1 = document.getElementById("ingredient1").value.toLowerCase();
-            const ingredient2 = document.getElementById("ingredient2").value.toLowerCase();
-            const ingredient3 = document.getElementById("ingredient3").value.toLowerCase();
+    const ingredient1 = document.getElementById("ingredient1").value.toLowerCase();
+    const ingredient2 = document.getElementById("ingredient2").value.toLowerCase();
+    const ingredient3 = document.getElementById("ingredient3").value.toLowerCase();
 
-            // Filter recipes based on multiple ingredients
-            const filteredRecipes = recipes.filter(recipe =>
-                (ingredient1 === '' || recipe.ingredients.some(i => i.toLowerCase().includes(ingredient1))) &&
-                (ingredient2 === '' || recipe.ingredients.some(i => i.toLowerCase().includes(ingredient2))) &&
-                (ingredient3 === '' || recipe.ingredients.some(i => i.toLowerCase().includes(ingredient3)))
-            );
+    // Filter recipes based on multiple ingredients
+    const filteredRecipes = recipes.filter(recipe =>
+        (ingredient1 === '' || recipe.ingredients.some(i => i.toLowerCase().includes(ingredient1))) &&
+        (ingredient2 === '' || recipe.ingredients.some(i => i.toLowerCase().includes(ingredient2))) &&
+        (ingredient3 === '' || recipe.ingredients.some(i => i.toLowerCase().includes(ingredient3)))
+    );
 
-            if (filteredRecipes.length > 0) {
-                // Pick a random recipe from the filtered list
-                const randomRecipe = filteredRecipes[Math.floor(Math.random() * filteredRecipes.length)];
+    if (filteredRecipes.length > 0) {
+        // Pick a random recipe from the filtered list
+        const randomRecipe = filteredRecipes[Math.floor(Math.random() * filteredRecipes.length)];
 
-                // Display the recipe details
-                document.getElementById("result").innerHTML = `
-                    <h2>${randomRecipe.title}</h2>
-                    <h3>Sastāvdaļas:</h3>
-                    <ul>${randomRecipe.ingredients.map(ingredient => `<li><input type="checkbox">${ingredient}</li>`).join('')}</ul>
-                    <h3>Soļi:</h3>
-                    <ol>${randomRecipe.steps.map(step => `<li><input type="checkbox">${step}</li>`).join('')}</ol>
-                `;
-            } else {
-                document.getElementById("result").innerHTML = "Tādu recepšu vēl nav.";
-            }
-        }
+        // Display the recipe details
+        document.getElementById("result").innerHTML = `
+            <h2>${randomRecipe.title}</h2>
+            <h3>Sastāvdaļas:</h3>
+            <ul>${randomRecipe.ingredients.map((ingredient, index) => `<li><input type="checkbox" id="ingredientCheckbox${index}" onchange="toggleStrikethrough(${index})">${ingredient}</li>`).join('')}</ul>
+            <h3>Soļi:</h3>
+            <ol>${randomRecipe.steps.map((step, index) => `<li><input type="checkbox" id="stepCheckbox${index}" onchange="toggleStrikethrough(${index})">${step}</li>`).join('')}</ol>
+        `;
+    } else {
+        document.getElementById("result").innerHTML = "Tādu recepšu vēl nav.";
+    }
+}
+
+// Function to toggle strikethrough style
+function toggleStrikethrough(index) {
+    const ingredientCheckbox = document.getElementById(`ingredientCheckbox${index}`);
+    const stepCheckbox = document.getElementById(`stepCheckbox${index}`);
+
+    if (ingredientCheckbox) {
+        const ingredientLabel = ingredientCheckbox.parentElement;
+        ingredientLabel.style.textDecoration = ingredientCheckbox.checked ? 'line-through' : 'none';
+    }
+
+    if (stepCheckbox) {
+        const stepLabel = stepCheckbox.parentElement;
+        stepLabel.style.textDecoration = stepCheckbox.checked ? 'line-through' : 'none';
+    }
+}
 
         function addRecipe(event) {
             event.preventDefault();

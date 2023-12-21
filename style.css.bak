@@ -6,27 +6,21 @@ body {
 }
 
 .container {
+    display: flex;
     max-width: 1000px;
     margin: 0 auto;
+}
+
+.randomizer {
+    flex: 1;
     padding: 20px;
-    box-sizing: border-box;
-}
-
-header {
-    text-align: center;
-}
-
-.section-container {
-    display: flex;
-    justify-content: space-between;
-}
-
-.randomizer-section,
-.recipe-input-section {
-    width: 48%; /* 48% to leave some space between sections */
     background-color: #fff;
+}
+
+.recipe-input {
+    flex: 1;
     padding: 20px;
-    box-sizing: border-box;
+    background-color: #fff;
 }
 
 h1, h2, h3 {

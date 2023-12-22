@@ -136,6 +136,18 @@
 			height: 40px;
 			margin: auto;
 		}
+		button.add-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-size: 24px; /* Adjust the font size as needed */
+    color: green; /* Change the color to green */
+}
+
+button.add-button:hover {
+    color: darkgreen; /* Change the hover color to a darker green if needed */
+}
     </style>
 
     <script>
@@ -506,7 +518,7 @@
                                 <td><input type="text" class="quantity-input" placeholder="Daudzums"></td>
                             </tr>
                         </table>
-                        <button type="button" onclick="addRow('ingredients-table')">➕</button>
+                        <button type="button" class="add-button" onclick="addRow('ingredients-table')">➕</button>
                     </div>
 
                     <div id="steps-section">
@@ -516,7 +528,7 @@
 								<td><input type="text" class="step-input" placeholder="Soļa apraksts"></td>
 							</tr>
                         </table>
-                        <button type="button" onclick="addRow('steps-list')">➕</button>
+                        <button type="button" class="add-button" onclick="addRow('steps-list')">➕</button>
                     </div>
 
                     <button type="submit">Pievienot recepti</button>

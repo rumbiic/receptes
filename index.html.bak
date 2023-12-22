@@ -182,6 +182,8 @@
     </style>
 
     <script>
+
+        let recipes = [];
         document.addEventListener("DOMContentLoaded", function () {
             // Fetch recipes from JSON file
             fetch('https://raw.githubusercontent.com/rumbiic/receptes/main/recipes.json')
@@ -259,8 +261,6 @@
         function saveRecipesToStorage(recipes) {
             localStorage.setItem(recipesKey, JSON.stringify(recipes));
         }
-
-        let recipes = getRecipesFromStorage();
 
         function displayRecipeList() {
             const recipeListTable = document.getElementById("recipe-list-table");

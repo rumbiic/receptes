@@ -138,6 +138,7 @@
 		}
 		button.add-button {
     background: none;
+	margin: auto;
     border: none;
     padding: 0;
     cursor: pointer;

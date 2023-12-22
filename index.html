@@ -304,9 +304,14 @@
     if (resultDiv) {
         resultDiv.innerHTML = `<p style="text-align: center; font-weight: bold;">${recipe.title}</p>`;
         resultDiv.innerHTML += `<p style="text-align: center;"><strong>Sastāvdaļas:</strong></p>`;
-        resultDiv.innerHTML += `<div><input type="checkbox" class="ingredient-checkbox" onchange="toggleStrikethrough(this)"> ${recipe.ingredients.join(', ')}</div>`;
+        recipe.ingredients.forEach((ingredient, index) => {
+            const quantity = recipe.ingredientsQuantities[index] ? `, ${recipe.ingredientsQuantities[index]}` : '';
+            resultDiv.innerHTML += `<div style="padding-bottom: 5px;"><input type="checkbox" class="ingredient-checkbox" onchange="toggleStrikethrough(this)" style="vertical-align: middle;"> ${ingredient}${quantity}</div>`;
+        });
         resultDiv.innerHTML += `<p style="text-align: center;"><strong>Pagatavošanas soļi:</strong></p>`;
-        resultDiv.innerHTML += recipe.steps.map((step, index) => `<div><input type="checkbox" class="step-checkbox" onchange="toggleStrikethrough(this)"> [${index + 1}.] ${step}</div>`).join('');
+        recipe.steps.forEach((step, index) => {
+            resultDiv.innerHTML += `<div style="padding-bottom: 5px;"><input type="checkbox" class="step-checkbox" onchange="toggleStrikethrough(this)" style="vertical-align: middle;"> ${index + 1}. ${step}</div>`;
+        });
     }
 }
 

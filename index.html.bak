@@ -68,11 +68,11 @@
         }
 
         .step-input {
-            width: calc(100% - 30px); /* Adjusted width to accommodate the X button */
+            width: 344px;
         }
 
         .quantity-input {
-            width: calc(100% - 20px); /* Adjusted width to accommodate the X button */
+            width: 150px;
         }
 
         input {
@@ -383,14 +383,14 @@
                 <h2>Pievienot jaunu recepti</h2>
                 <form onsubmit="addRecipe(event)">
                     <label for="new-title">Nosaukums:</label>
-                    <input type="text" id="new-title" style="width: calc(100% - 10px);" required>
+                    <input type="text" id="new-title" style="width: 253px;" required>
 
                     <div id="ingredients-section">
                         <h3>Sastāvdaļas:</h3>
                         <table id="ingredients-table">
                             <tr>
                                 <td><input type="text" class="ingredient-input awesomplete" placeholder="Sastāvdaļa"></td>
-                                <td><input type="text" class="quantity-input" placeholder="Daudzums" style="width: calc(50% - 10px);"></td>
+                                <td><input type="text" class="quantity-input" placeholder="Daudzums"></td>
                             </tr>
                         </table>
                         <button type="button" onclick="addRow('ingredients-table')">➕</button>
@@ -400,7 +400,7 @@
                         <h3>Soļi:</h3>
                         <table id="steps-list">
 							<tr>
-								<td><input type="text" class="step-input" placeholder="Soļa apraksts" style="width: calc(100% - 20px);"></td>
+								<td><input type="text" class="step-input" placeholder="Soļa apraksts"></td>
 							</tr>
                         </table>
                         <button type="button" onclick="addRow('steps-list')">➕</button>

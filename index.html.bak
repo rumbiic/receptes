@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prūšu receptes</title>
-	<script src="awesomplete.min.js"></script>
-	<script src="awesomplete.js"></script>
 	<link rel="stylesheet" href="awesomplete.css">
 	<link rel="stylesheet" href="awesomplete.base.css">
+	<script src="awesomplete.min.js"></script>
+	<script src="awesomplete.js"></script>
 	
     <style>
         body {
@@ -77,12 +77,22 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const inputs = document.querySelectorAll('.awesomplete');
-            inputs.forEach(input => {
-                const awesomplete = new Awesomplete(input, { minChars: 1, list: [] });
-                awesomplete.list = getUniqueIngredients();
-            });
-        });
+    const inputs = document.querySelectorAll('.awesomplete');
+    inputs.forEach(input => {
+        const awesomplete = new Awesomplete(input, { minChars: 1, list: [] });
+        updateAwesompleteList(awesomplete);
+    });
+
+    // Initialize recipes from local storage
+    recipes = getRecipesFromStorage();
+    
+    // Display the initial recipe list
+    displayRecipeList();
+});
+
+function updateAwesompleteList(awesomplete) {
+    awesomplete.list = getUniqueIngredients();
+}
 
         const recipesKey = 'prusu_recipes';
 
@@ -109,30 +119,59 @@
 
         displayRecipeList();
 
-        function generateRecipe() {
-            const ingredient1 = document.getElementById("ingredient1").value.toLowerCase();
-            const ingredient2 = document.getElementById("ingredient2").value.toLowerCase();
-            const ingredient3 = document.getElementById("ingredient3").value.toLowerCase();
+        function addRecipe(event) {
+                event.preventDefault();
 
-            const filteredRecipes = recipes.filter(recipe =>
-                (ingredient1 === '' || recipe.ingredients.some(i => i.toLowerCase().includes(ingredient1))) &&
-                (ingredient2 === '' || recipe.ingredients.some(i => i.toLowerCase().includes(ingredient2))) &&
-                (ingredient3 === '' || recipe.ingredients.some(i => i.toLowerCase().includes(ingredient3)))
-            );
+                const newTitleElement = document.getElementById("new-title");
+                const newIngredientsElement = document.getElementById("new-ingredients");
+                const newStepsElement = document.getElementById("new-steps");
 
-            if (filteredRecipes.length > 0) {
-                const randomRecipe = filteredRecipes[Math.floor(Math.random() * filteredRecipes.length)];
-                document.getElementById("result").innerHTML = `
-                    <h2>${randomRecipe.title}</h2>
-                    <h3>Sastāvdaļas:</h3>
-                    <ul>${randomRecipe.ingredients.map((ingredient, index) => `<li><input type="checkbox" id="ingredientCheckbox${index}" onchange="toggleStrikethrough(${index})">${ingredient}</li>`).join('')}</ul>
-                    <h3>Soļi:</h3>
-                    <ol>${randomRecipe.steps.map((step, index) => `<li><input type="checkbox" id="stepCheckbox${index}" onchange="toggleStrikethrough(${index})">${step}</li>`).join('')}</ol>
-                `;
-            } else {
-                document.getElementById("result").innerHTML = "Tādu recepšu vēl nav.";
+                if (!newTitleElement || !newIngredientsElement || !newStepsElement) {
+                    alert("Aizpildi visus laukus");
+                    return;
+                }
+
+                const newTitle = newTitleElement.value;
+                const newIngredients = [];
+                const newSteps = [];
+
+                // Gather new ingredients
+                const ingredientInputs = document.querySelectorAll('.ingredient-input');
+                ingredientInputs.forEach(input => {
+                    const value = input.value.trim();
+                    if (value) newIngredients.push(value);
+                });
+
+                // Gather new steps
+                const stepInputs = document.querySelectorAll('.step-input');
+                stepInputs.forEach(input => {
+                    const value = input.value.trim();
+                    if (value) newSteps.push(value);
+                });
+
+                if (!newTitle || newIngredients.length === 0 || newSteps.length === 0) {
+                    alert("Aizpildi visus laukus");
+                    return;
+                }
+
+                recipes.push({
+                    title: newTitle,
+                    ingredients: newIngredients,
+                    steps: newSteps
+                });
+
+                // Save recipes to local storage
+                saveRecipesToStorage(recipes);
+
+                newTitleElement.value = '';
+                newIngredientsElement.value = '';
+                newStepsElement.value = '';
+
+                // Display the updated recipe list
+                displayRecipeList();
+
+                alert("Recepte veiksmīgi pievienota!");
             }
-        }
 
         function toggleStrikethrough(index) {
             const ingredientCheckbox = document.getElementById(`ingredientCheckbox${index}`);

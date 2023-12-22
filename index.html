@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prūšu receptes</title>
-	<link rel="stylesheet" href="awesomplete.css">
-	<link rel="stylesheet" href="awesomplete.base.css">
-	<script src="awesomplete.min.js"></script>
-	<script src="awesomplete.js"></script>
-	
+    <link rel="stylesheet" href="awesomplete.css">
+    <link rel="stylesheet" href="awesomplete.base.css">
+    <script src="awesomplete.min.js"></script>
+    <script src="awesomplete.js"></script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -77,22 +77,22 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-    const inputs = document.querySelectorAll('.awesomplete');
-    inputs.forEach(input => {
-        const awesomplete = new Awesomplete(input, { minChars: 1, list: [] });
-        updateAwesompleteList(awesomplete);
-    });
+            const inputs = document.querySelectorAll('.awesomplete');
+            inputs.forEach(input => {
+                const awesomplete = new Awesomplete(input, { minChars: 1, list: [] });
+                updateAwesompleteList(awesomplete);
+            });
 
-    // Initialize recipes from local storage
-    recipes = getRecipesFromStorage();
-    
-    // Display the initial recipe list
-    displayRecipeList();
-});
+            // Initialize recipes from local storage
+            recipes = getRecipesFromStorage();
 
-function updateAwesompleteList(awesomplete) {
-    awesomplete.list = getUniqueIngredients();
-}
+            // Display the initial recipe list
+            displayRecipeList();
+        });
+
+        function updateAwesompleteList(awesomplete) {
+            awesomplete.list = getUniqueIngredients();
+        }
 
         const recipesKey = 'prusu_recipes';
 
@@ -114,77 +114,8 @@ function updateAwesompleteList(awesomplete) {
 
         function displayRecipeList() {
             const recipeListUl = document.getElementById("recipe-list-ul");
-            recipeListUl.innerHTML = recipes.map((recipe, index) => `<li>${recipe.title} <button onclick="deleteRecipe(${index})">Dzēst</button></li>`).join('');
-        }
-
-        displayRecipeList();
-
-        function addRecipe(event) {
-                event.preventDefault();
-
-                const newTitleElement = document.getElementById("new-title");
-                const newIngredientsElement = document.getElementById("new-ingredients");
-                const newStepsElement = document.getElementById("new-steps");
-
-                if (!newTitleElement || !newIngredientsElement || !newStepsElement) {
-                    alert("Aizpildi visus laukus");
-                    return;
-                }
-
-                const newTitle = newTitleElement.value;
-                const newIngredients = [];
-                const newSteps = [];
-
-                // Gather new ingredients
-                const ingredientInputs = document.querySelectorAll('.ingredient-input');
-                ingredientInputs.forEach(input => {
-                    const value = input.value.trim();
-                    if (value) newIngredients.push(value);
-                });
-
-                // Gather new steps
-                const stepInputs = document.querySelectorAll('.step-input');
-                stepInputs.forEach(input => {
-                    const value = input.value.trim();
-                    if (value) newSteps.push(value);
-                });
-
-                if (!newTitle || newIngredients.length === 0 || newSteps.length === 0) {
-                    alert("Aizpildi visus laukus");
-                    return;
-                }
-
-                recipes.push({
-                    title: newTitle,
-                    ingredients: newIngredients,
-                    steps: newSteps
-                });
-
-                // Save recipes to local storage
-                saveRecipesToStorage(recipes);
-
-                newTitleElement.value = '';
-                newIngredientsElement.value = '';
-                newStepsElement.value = '';
-
-                // Display the updated recipe list
-                displayRecipeList();
-
-                alert("Recepte veiksmīgi pievienota!");
-            }
-
-        function toggleStrikethrough(index) {
-            const ingredientCheckbox = document.getElementById(`ingredientCheckbox${index}`);
-            const stepCheckbox = document.getElementById(`stepCheckbox${index}`);
-
-            if (ingredientCheckbox) {
-                const ingredientLabel = ingredientCheckbox.parentElement;
-                ingredientLabel.style.textDecoration = ingredientCheckbox.checked ? 'line-through' : 'none';
-            }
-
-            if (stepCheckbox) {
-                const stepLabel = stepCheckbox.parentElement;
-                stepLabel.style.textDecoration = stepCheckbox.checked ? 'line-through' : 'none';
+            if (recipeListUl) {
+                recipeListUl.innerHTML = recipes.map((recipe, index) => `<li>${recipe.title} <button onclick="deleteRecipe(${index})">Dzēst</button></li>`).join('');
             }
         }
 
@@ -248,7 +179,7 @@ function updateAwesompleteList(awesomplete) {
                 if (tableId === 'ingredients-table') {
                     const cell1 = newRow.insertCell(0);
                     const cell2 = newRow.insertCell(1);
-                    cell1.innerHTML = '<input type="text" class="ingredient-input awesomplete" placeholder="Sastāvdaļa" data-list="[]">';
+                    cell1.innerHTML = '<input type="text" class="ingredient-input awesomplete" placeholder="Sastāvdaļa">';
                     cell2.innerHTML = '<input type="text" class="quantity-input" placeholder="Daudzums">';
                 } else if (tableId === 'steps-list') {
                     const cell = newRow.insertCell(0);
@@ -267,13 +198,13 @@ function updateAwesompleteList(awesomplete) {
         <div class="section-container">
             <div class="randomizer-section">
                 <label for="ingredient1">Ievadi sastāvdaļu:</label>
-                <input type="text" id="ingredient1" class="awesomplete" placeholder="Ievadi sastāvdaļu" data-list="[]"><br>
+                <input type="text" id="ingredient1" class="awesomplete" placeholder="Ievadi sastāvdaļu" data-list=""><br>
 
                 <label for="ingredient2">Ievadi sastāvdaļu:</label>
-                <input type="text" id="ingredient2" class="awesomplete" placeholder="Ievadi sastāvdaļu" data-list="[]"><br>
+                <input type="text" id="ingredient2" class="awesomplete" placeholder="Ievadi sastāvdaļu" data-list=""><br>
 
                 <label for="ingredient3">Ievadi sastāvdaļu:</label>
-                <input type="text" id="ingredient3" class="awesomplete" placeholder="Ievadi sastāvdaļu" data-list="[]"><br>
+                <input type="text" id="ingredient3" class="awesomplete" placeholder="Ievadi sastāvdaļu" data-list=""><br>
 
                 <button onclick="generateRecipe()">Atrast recepti</button>
                 <div id="result"></div>
@@ -289,7 +220,7 @@ function updateAwesompleteList(awesomplete) {
                         <h3>Sastāvdaļas:</h3>
                         <table id="ingredients-table">
                             <tr>
-                                <td><input type="text" class="ingredient-input awesomplete" placeholder="Sastāvdaļa" data-list="[]"></td>
+                                <td><input type="text" class="ingredient-input awesomplete" placeholder="Sastāvdaļa"></td>
                                 <td><input type="text" class="quantity-input" placeholder="Daudzums"></td>
                             </tr>
                         </table>

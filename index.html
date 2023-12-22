@@ -148,11 +148,11 @@
         let recipes = getRecipesFromStorage();
 
         function displayRecipeList() {
-    const recipeTable = document.getElementById("recipe-list-table");
+    const recipeListTable = document.getElementById("recipe-list-table");
 
-    if (recipeTable) {
-        // Clear existing table rows
-        recipeTable.innerHTML = "";
+    if (recipeListTable) {
+        // Clear existing table content
+        recipeListTable.innerHTML = "";
 
         // Sort recipes alphabetically
         const sortedRecipes = recipes.slice().sort((a, b) => a.title.localeCompare(b.title));
@@ -163,24 +163,23 @@
         // Calculate the number of columns needed
         const numColumns = Math.ceil(sortedRecipes.length / rowsPerColumn);
 
-        // Create new table rows
+        // Create the table structure
         for (let i = 0; i < rowsPerColumn; i++) {
-            const row = document.createElement("tr");
-
+            const row = recipeListTable.insertRow();
             for (let j = 0; j < numColumns; j++) {
-                const columnIndex = i + j * rowsPerColumn;
-                if (columnIndex < sortedRecipes.length) {
-                    const recipe = sortedRecipes[columnIndex];
-
-                    const titleCell = document.createElement("td");
-                    titleCell.style.padding = "5px";
-                    titleCell.textContent = recipe.title;
-
-                    row.appendChild(titleCell);
-                }
+                const cell = row.insertCell();
+                cell.innerHTML = "&nbsp;"; // Add a non-breaking space to ensure the cell is not collapsed
             }
+        }
 
-            recipeTable.appendChild(row);
+        // Populate the table with recipe data
+        for (let i = 0; i < sortedRecipes.length; i++) {
+            const recipe = sortedRecipes[i];
+            const rowIdx = i % rowsPerColumn;
+            const colIdx = Math.floor(i / rowsPerColumn);
+
+            const cell = recipeListTable.rows[rowIdx].cells[colIdx];
+            cell.innerHTML = `<span>${recipe.title}</span> <span class="remove-button" onclick="deleteRecipe(${i})">❌</span>`;
         }
     }
 }

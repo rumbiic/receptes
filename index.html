@@ -4,7 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prūšu receptes</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.2/awesomplete.min.js" integrity="sha512-vnm2b1Ec3nW6I4sP6A+4rHfAE2tv2tGHuGJwIGtZOa3uvqkpU3il+paiU+Ol6nFiRJnmbJ92Qc4IIqjZL4KtNw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.2/awesomplete.css" integrity="sha512-B2dJzDDrT/ntEuZxZWwdECokl4DlWRlDfN5gA82u6X55u8duDfrQzy8Ei5leQXzPfbzrBqFvLgbXtrkw+3uZWQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	
     <script>
+	document.addEventListener("DOMContentLoaded", function() {
+    const inputs = document.querySelectorAll('.awesomplete');
+    inputs.forEach(input => {
+        const awesomplete = new Awesomplete(input, { minChars: 1, list: [] });
+        awesomplete.list = getUniqueIngredients();
+    });
+});
+
+// Function to get unique ingredients from recipes
+function getUniqueIngredients() {
+    const allIngredients = recipes.reduce((acc, recipe) => [...acc, ...recipe.ingredients], []);
+    return [...new Set(allIngredients)];
+}
         // Add your recipes here
         const recipes = [
             { title: 'Rīsi ar pupiņu-kukurūzas mērci', ingredients: ['Rīsi 1 paciņa', 'Pupiņas 1 bundža', 'Kukurūza 1 maza bundža', 'Tomātu mērce 1/2 Spilva', 'Šampinjoni 200g'], steps: ['Liekam vārīties rīsus sālsūdenī', 'Uz pannas apcepam sagrieztus šampinjonus', 'Pievienojam pupiņas, kukurūzu un nedaudz apcepjam', 'Pievienojam tomātu mērci', 'Kad rīsi gatavi, pasniedzam'] },
@@ -23,6 +39,23 @@
         (ingredient2 === '' || recipe.ingredients.some(i => i.toLowerCase().includes(ingredient2))) &&
         (ingredient3 === '' || recipe.ingredients.some(i => i.toLowerCase().includes(ingredient3)))
     );
+
+    if (filteredRecipes.length > 0) {
+        // Pick a random recipe from the filtered list
+        const randomRecipe = filteredRecipes[Math.floor(Math.random() * filteredRecipes.length)];
+
+        // Display the recipe details
+        document.getElementById("result").innerHTML = `
+            <h2>${randomRecipe.title}</h2>
+            <h3>Sastāvdaļas:</h3>
+            <ul>${randomRecipe.ingredients.map((ingredient, index) => `<li><input type="checkbox" id="ingredientCheckbox${index}" onchange="toggleStrikethrough(${index})">${ingredient}</li>`).join('')}</ul>
+            <h3>Soļi:</h3>
+            <ol>${randomRecipe.steps.map((step, index) => `<li><input type="checkbox" id="stepCheckbox${index}" onchange="toggleStrikethrough(${index})">${step}</li>`).join('')}</ol>
+        `;
+    } else {
+        document.getElementById("result").innerHTML = "Tādu recepšu vēl nav.";
+    }
+}
 
     if (filteredRecipes.length > 0) {
         // Pick a random recipe from the filtered list
@@ -118,27 +151,28 @@ function toggleStrikethrough(index) {
     </script>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-        }
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-            box-sizing: border-box;
-        }
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
 
-        header {
-            text-align: center;
-        }
+header {
+    text-align: center;
+}
 
-        .section-container {
-            display: flex;
-            flex-direction: column; /* Adjusted to column layout */
-        }
+.section-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap to the next line */
+    justify-content: space-between;
+}
 
         .randomizer-section,
 .recipe-input-section {
@@ -146,6 +180,7 @@ function toggleStrikethrough(index) {
     background-color: #fff;
     padding: 20px;
     box-sizing: border-box;
+    margin-bottom: 20px; /* Added margin between sections */
 }
 
         h1, h2, h3 {
@@ -170,6 +205,13 @@ function toggleStrikethrough(index) {
             height: 30px; /* Adjust the height as needed */
             margin-bottom: 10px; /* Added space between inputs */
         }
+		.recipe-list-section {
+    width: 100%; /* Set the width to 100% for the recipe-list-section */
+    background-color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-bottom: 20px; /* Added margin between sections */
+}
     </style>
 </head>
 <body>
@@ -181,13 +223,13 @@ function toggleStrikethrough(index) {
         <div class="section-container">
             <div class="randomizer-section">
                 <label for="ingredient1">Ievadi sastāvdaļu:</label>
-                <input type="text" id="ingredient1">
+                <input type="text" id="ingredient1" class="awesomplete" placeholder="Ievadi sastāvdaļu" data-list="[]"><br>
 
                 <label for="ingredient2">Ievadi sastāvdaļu:</label>
-                <input type="text" id="ingredient2">
+                <input type="text" id="ingredient2" class="awesomplete" placeholder="Ievadi sastāvdaļu" data-list="[]"><br>
 
                 <label for="ingredient3">Ievadi sastāvdaļu:</label>
-                <input type="text" id="ingredient3">
+                <input type="text" id="ingredient3" class="awesomplete" placeholder="Ievadi sastāvdaļu" data-list="[]"><br>
 
                 <button onclick="generateRecipe()">Atrast recepti</button>
                 <div id="result"></div>

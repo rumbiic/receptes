@@ -577,8 +577,8 @@
                         <h3>Sastāvdaļas:</h3>
                         <table id="ingredients-table">
                             <tr>
-                                <td><input type="text" class="ingredient-input awesomplete" placeholder="Sastāvdaļa"></td>
-                                <td><input type="text" class="quantity-input" placeholder="Daudzums"></td>
+                                <td class="ingr"><input type="text" class="ingredient-input awesomplete" placeholder="Sastāvdaļa"></td>
+                                <td class="qty"><input type="text" class="quantity-input" placeholder="Daudzums"></td>
                             </tr>
                         </table>
                         <button type="button" class="add-button" onclick="addRow('ingredients-table')">Jauna rinda</button>

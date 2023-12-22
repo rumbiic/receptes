@@ -246,22 +246,11 @@
             });
         }
 
-        const recipesKey = 'prusu_recipes';
-
         function getUniqueIngredients() {
             const allIngredients = recipes.reduce((acc, recipe) => [...acc, ...recipe.ingredients], []);
             return [...new Set(allIngredients)];
         }
-
-        function getRecipesFromStorage() {
-            const storedRecipes = localStorage.getItem(recipesKey);
-            return storedRecipes ? JSON.parse(storedRecipes) : [];
-        }
-
-        function saveRecipesToStorage(recipes) {
-            localStorage.setItem(recipesKey, JSON.stringify(recipes));
-        }
-
+		
         function displayRecipeList() {
             const recipeListTable = document.getElementById("recipe-list-table");
 
@@ -508,6 +497,18 @@
                 ingredientsQuantities: newIngredientsQuantities,
                 steps: newSteps
             });
+			
+			await fetch('https://api.github.com/repos/rumbiic/receptes/actions/workflows/update-recipes.yml/dispatches', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer GH_TOKEN',
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            ref: 'main'
+        })
+    });
 
             // Clear input fields
             newTitleElement.value = '';

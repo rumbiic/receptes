@@ -67,8 +67,13 @@
             margin-top: 10px;
         }
 
-        .step-input {
-            width: 100%;
+        .step-input,
+        .ingredient-input {
+            width: calc(100% - 30px); /* Adjusted width to accommodate the X button */
+        }
+
+        .quantity-input {
+            width: calc(100% - 20px); /* Adjusted width to accommodate the X button */
         }
 
         input {

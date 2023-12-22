@@ -247,8 +247,8 @@
             event.preventDefault();
 
             const newTitleElement = document.getElementById("new-title");
-            const newIngredientsElement = document.getElementById("new-ingredients");
-            const newStepsElement = document.getElementById("new-steps");
+			const newIngredientsElement = document.getElementById("new-ingredients-table"); // Corrected ID
+			const newStepsElement = document.getElementById("new-steps-list"); // Corrected ID
 
             if (!newTitleElement || !newIngredientsElement || !newStepsElement) {
                 alert("Aizpildi visus laukus");

@@ -115,11 +115,12 @@
         function displayRecipeList() {
             const recipeListUl = document.getElementById("recipe-list-ul");
             if (recipeListUl) {
-                recipeListUl.innerHTML = recipes.map((recipe, index) => `<li>${recipe.title} <button onclick="deleteRecipe(${index})">Dzēst</button></li>`).join('');
+                recipeListUl.innerHTML = recipes.map((recipe, index) => {
+                    return `<li>${recipe.title} <button onclick="deleteRecipe(${index})">Dzēst</button></li>`;
+                }).join('');
             }
         }
 
-        // Function to add a new row to the specified table
         function addRow(tableId) {
             const table = document.getElementById(tableId);
 
@@ -129,13 +130,26 @@
 
                 if (tableId === 'ingredients-table') {
                     cell.innerHTML = '<input type="text" class="ingredient-input awesomplete" placeholder="Sastāvdaļa">';
+                    cell.appendChild(document.createElement("br"));
+                    cell.appendChild(document.createTextNode("Daudzums: "));
+                    cell.appendChild(document.createElement("input")).classList.add("quantity-input");
                 } else if (tableId === 'steps-list') {
                     cell.innerHTML = `<input type="text" class="step-input" placeholder="Soļa apraksts">`;
                 }
             }
         }
 
-        // Function to generate a random recipe based on ingredients
+        function removeRow(tableId) {
+            const table = document.getElementById(tableId);
+
+            if (table) {
+                const rowCount = table.rows.length;
+                if (rowCount > 2) {
+                    table.deleteRow(rowCount - 1);
+                }
+            }
+        }
+
         function generateRecipe() {
             const ingredient1 = document.getElementById("ingredient1").value;
             const ingredient2 = document.getElementById("ingredient2").value;
@@ -143,27 +157,31 @@
 
             const matchingRecipes = recipes.filter(recipe => {
                 const ingredients = recipe.ingredients.map(ingredient => ingredient.toLowerCase());
-                return ingredients.includes(ingredient1.toLowerCase()) ||
+                return !ingredient1 && !ingredient2 && !ingredient3 ||
+                    ingredients.includes(ingredient1.toLowerCase()) ||
                     ingredients.includes(ingredient2.toLowerCase()) ||
                     ingredients.includes(ingredient3.toLowerCase());
             });
 
             if (matchingRecipes.length > 0) {
                 const randomRecipe = matchingRecipes[Math.floor(Math.random() * matchingRecipes.length)];
-                document.getElementById("result").innerHTML = `<p>Random Recipe: ${randomRecipe.title}</p>`;
+                showRecipeDetails(randomRecipe);
             } else {
                 document.getElementById("result").innerHTML = `<p>No recipes found with the specified ingredients.</p>`;
             }
         }
 
-        // Function to delete a recipe by index
-        function deleteRecipe(index) {
-            recipes.splice(index, 1);
-            saveRecipesToStorage(recipes);
-            displayRecipeList();
+        function showRecipeDetails(recipe) {
+            const resultDiv = document.getElementById("result");
+            if (resultDiv) {
+                resultDiv.innerHTML = `<p style="text-align: center; font-weight: bold;">${recipe.title}</p>`;
+                resultDiv.innerHTML += `<p><strong>Ingredients:</strong></p>`;
+                resultDiv.innerHTML += `<ul>${recipe.ingredients.map(ingredient => `<li><input type="checkbox">${ingredient}</li>`).join('')}</ul>`;
+                resultDiv.innerHTML += `<p><strong>Steps:</strong></p>`;
+                resultDiv.innerHTML += `<ol>${recipe.steps.map(step => `<li><input type="checkbox">${step}</li>`).join('')}</ol>`;
+            }
         }
 
-        // Function to add a new recipe
         function addRecipe(event) {
             event.preventDefault();
 
@@ -180,14 +198,12 @@
             const newIngredients = [];
             const newSteps = [];
 
-            // Gather new ingredients
             const ingredientInputs = document.querySelectorAll('.ingredient-input');
             ingredientInputs.forEach(input => {
                 const value = input.value.trim();
                 if (value) newIngredients.push(value);
             });
 
-            // Gather new steps
             const stepInputs = document.querySelectorAll('.step-input');
             stepInputs.forEach(input => {
                 const value = input.value.trim();

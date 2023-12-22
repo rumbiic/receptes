@@ -129,12 +129,27 @@
                 const cell = newRow.insertCell(0);
 
                 if (tableId === 'ingredients-table') {
-                    cell.innerHTML = '<input type="text" class="ingredient-input awesomplete" placeholder="Sastāvdaļa">';
+                    const inputIngredient = document.createElement("input");
+                    inputIngredient.type = "text";
+                    inputIngredient.classList.add("ingredient-input", "awesomplete");
+                    inputIngredient.placeholder = "Sastāvdaļa";
+
+                    const inputQuantity = document.createElement("input");
+                    inputQuantity.type = "text";
+                    inputQuantity.classList.add("quantity-input");
+                    inputQuantity.placeholder = "Daudzums";
+
+                    cell.appendChild(inputIngredient);
                     cell.appendChild(document.createElement("br"));
                     cell.appendChild(document.createTextNode("Daudzums: "));
-                    cell.appendChild(document.createElement("input")).classList.add("quantity-input");
+                    cell.appendChild(inputQuantity);
                 } else if (tableId === 'steps-list') {
-                    cell.innerHTML = `<input type="text" class="step-input" placeholder="Soļa apraksts">`;
+                    const inputStep = document.createElement("input");
+                    inputStep.type = "text";
+                    inputStep.classList.add("step-input");
+                    inputStep.placeholder = "Soļa apraksts";
+
+                    cell.appendChild(inputStep);
                 }
             }
         }
@@ -176,9 +191,9 @@
             if (resultDiv) {
                 resultDiv.innerHTML = `<p style="text-align: center; font-weight: bold;">${recipe.title}</p>`;
                 resultDiv.innerHTML += `<p><strong>Ingredients:</strong></p>`;
-                resultDiv.innerHTML += `<ul>${recipe.ingredients.map(ingredient => `<li><input type="checkbox">${ingredient}</li>`).join('')}</ul>`;
+                resultDiv.innerHTML += `<ul>${recipe.ingredients.map(ingredient => `<li><input type="checkbox" onchange="toggleStrikethrough(this)">${ingredient}</li>`).join('')}</ul>`;
                 resultDiv.innerHTML += `<p><strong>Steps:</strong></p>`;
-                resultDiv.innerHTML += `<ol>${recipe.steps.map(step => `<li><input type="checkbox">${step}</li>`).join('')}</ol>`;
+                resultDiv.innerHTML += `<ol>${recipe.steps.map(step => `<li><input type="checkbox" onchange="toggleStrikethrough(this)">${step}</li>`).join('')}</ol>`;
             }
         }
 
@@ -231,6 +246,21 @@
             alert("Recepte veiksmīgi pievienota!");
         }
 
+        function toggleStrikethrough(checkbox) {
+            const listItem = checkbox.parentNode;
+            if (checkbox.checked) {
+                listItem.style.textDecoration = "line-through";
+            } else {
+                listItem.style.textDecoration = "none";
+            }
+        }
+
+        function deleteRecipe(index) {
+            recipes.splice(index, 1);
+            saveRecipesToStorage(recipes);
+            displayRecipeList();
+        }
+        
         // Adding test recipes
         recipes.push({
             title: "Rīsi ar olām",

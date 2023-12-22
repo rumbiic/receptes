@@ -134,13 +134,27 @@
         let recipes = getRecipesFromStorage();
 
         function displayRecipeList() {
-            const recipeListUl = document.getElementById("recipe-list-ul");
-            if (recipeListUl) {
-                recipeListUl.innerHTML = recipes.map((recipe, index) => {
-                    return `<li>${recipe.title} <button onclick="deleteRecipe(${index})">Dzēst</button></li>`;
-                }).join('');
-            }
-        }
+    const recipeListUl = document.getElementById("recipe-list-ul");
+    if (recipeListUl) {
+        // Clear existing list items
+        recipeListUl.innerHTML = "";
+        
+        // Create new list items
+        recipes.forEach((recipe, index) => {
+            const listItem = document.createElement("li");
+            listItem.textContent = recipe.title;
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Dzēst";
+            deleteButton.onclick = function () {
+                deleteRecipe(index);
+            };
+
+            listItem.appendChild(deleteButton);
+            recipeListUl.appendChild(listItem);
+        });
+    }
+}
 
         function addRow(tableId) {
     const table = document.getElementById(tableId);
@@ -246,43 +260,71 @@
     event.preventDefault();
 
     const newTitleElement = document.getElementById("new-title");
+    const newIngredientsElement = document.getElementById("ingredients-table");
+    const newStepsElement = document.getElementById("steps-list");
 
-    // Corrected code to get new ingredients and steps
+    let newTitle = "";  
     const newIngredients = [];
     const newSteps = [];
 
-    const ingredientInputs = document.querySelectorAll('#ingredients-table .ingredient-input');
+    // Get new title
+    if (newTitleElement) {
+        newTitle = newTitleElement.value;
+    } else {
+        alert("Aizpildi visus laukus");
+        return;
+    }
+
+    // Get new ingredients
+    const ingredientInputs = newIngredientsElement.querySelectorAll('.ingredient-input');
     ingredientInputs.forEach(input => {
         const value = input.value.trim();
         if (value) newIngredients.push(value);
     });
 
-    const stepInputs = document.querySelectorAll('#steps-list .step-input');
+    // Get new steps
+    const stepInputs = newStepsElement.querySelectorAll('.step-input');
     stepInputs.forEach(input => {
         const value = input.value.trim();
         if (value) newSteps.push(value);
     });
 
-            if (!newTitle || newIngredients.length === 0 || newSteps.length === 0) {
-                alert("Aizpildi visus laukus");
-                return;
-            }
+    // Check if required fields are filled
+    if (!newTitle || newIngredients.length === 0 || newSteps.length === 0) {
+        alert("Aizpildi visus laukus");
+        return;
+    }
 
-            recipes.push({
-                title: newTitle,
-                ingredients: newIngredients,
-                steps: newSteps
-            });
+    // Add the new recipe to the recipes array
+    recipes.push({
+        title: newTitle,
+        ingredients: newIngredients,
+        steps: newSteps
+    });
 
-            newTitleElement.value = '';
-            newIngredientsElement.value = '';
-            newStepsElement.value = '';
+    // Clear input fields
+    newTitleElement.value = '';
+    
+    // Clear ingredient input fields
+    const ingredientInputsArray = Array.from(ingredientInputs);
+    ingredientInputsArray.forEach(input => {
+        input.value = '';
+    });
 
-            saveRecipesToStorage(recipes);
-            displayRecipeList();
+    // Clear step input fields
+    const stepInputsArray = Array.from(stepInputs);
+    stepInputsArray.forEach(input => {
+        input.value = '';
+    });
 
-            alert("Recepte veiksmīgi pievienota!");
-        }
+    // Save recipes to local storage
+    saveRecipesToStorage(recipes);
+
+    // Display the updated recipe list
+    displayRecipeList();
+
+    alert("Recepte veiksmīgi pievienota!");
+}
 
         function toggleStrikethrough(checkbox) {
             const listItem = checkbox.parentNode;

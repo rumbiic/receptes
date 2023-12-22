@@ -134,13 +134,27 @@
         let recipes = getRecipesFromStorage();
 
         function displayRecipeList() {
-            const recipeListUl = document.getElementById("recipe-list-ul");
-            if (recipeListUl) {
-                recipeListUl.innerHTML = recipes.map((recipe, index) => {
-                    return `<li>${recipe.title} <button onclick="deleteRecipe(${index})">Dzēst</button></li>`;
-                }).join('');
-            }
-        }
+    const recipeListUl = document.getElementById("recipe-list-ul");
+    if (recipeListUl) {
+        // Clear existing list items
+        recipeListUl.innerHTML = "";
+        
+        // Create new list items
+        recipes.forEach((recipe, index) => {
+            const listItem = document.createElement("li");
+            listItem.textContent = recipe.title;
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Dzēst";
+            deleteButton.onclick = function () {
+                deleteRecipe(index);
+            };
+
+            listItem.appendChild(deleteButton);
+            recipeListUl.appendChild(listItem);
+        });
+    }
+}
 
         function addRow(tableId) {
     const table = document.getElementById(tableId);
@@ -243,49 +257,74 @@
         }
 
         function addRecipe(event) {
-			event.preventDefault();
+    event.preventDefault();
 
-			const newTitleElement = document.getElementById("new-title");
-			let newTitle = "";  // Declare newTitle outside of the if statement
+    const newTitleElement = document.getElementById("new-title");
+    const newIngredientsElement = document.getElementById("ingredients-table");
+    const newStepsElement = document.getElementById("steps-list");
 
-			// Corrected code to get new ingredients and steps
-			const newIngredients = [];
-			const newSteps = [];
+    let newTitle = "";  
+    const newIngredients = [];
+    const newSteps = [];
 
-			const ingredientInputs = document.querySelectorAll('#ingredients-table .ingredient-input');
-			ingredientInputs.forEach(input => {
-				const value = input.value.trim();
-				if (value) newIngredients.push(value);
-			});
-
-			const stepInputs = document.querySelectorAll('#steps-list .step-input');
-			stepInputs.forEach(input => {
-				const value = input.value.trim();
-				if (value) newSteps.push(value);
-			});
-
-            if (newTitleElement) {
+    // Get new title
+    if (newTitleElement) {
         newTitle = newTitleElement.value;
     } else {
         alert("Aizpildi visus laukus");
         return;
     }
 
-            recipes.push({
-                title: newTitle,
-                ingredients: newIngredients,
-                steps: newSteps
-            });
+    // Get new ingredients
+    const ingredientInputs = newIngredientsElement.querySelectorAll('.ingredient-input');
+    ingredientInputs.forEach(input => {
+        const value = input.value.trim();
+        if (value) newIngredients.push(value);
+    });
 
-            newTitleElement.value = '';
-            newIngredientsElement.value = '';
-            newStepsElement.value = '';
+    // Get new steps
+    const stepInputs = newStepsElement.querySelectorAll('.step-input');
+    stepInputs.forEach(input => {
+        const value = input.value.trim();
+        if (value) newSteps.push(value);
+    });
 
-            saveRecipesToStorage(recipes);
-            displayRecipeList();
+    // Check if required fields are filled
+    if (!newTitle || newIngredients.length === 0 || newSteps.length === 0) {
+        alert("Aizpildi visus laukus");
+        return;
+    }
 
-            alert("Recepte veiksmīgi pievienota!");
-        }
+    // Add the new recipe to the recipes array
+    recipes.push({
+        title: newTitle,
+        ingredients: newIngredients,
+        steps: newSteps
+    });
+
+    // Clear input fields
+    newTitleElement.value = '';
+    
+    // Clear ingredient input fields
+    const ingredientInputsArray = Array.from(ingredientInputs);
+    ingredientInputsArray.forEach(input => {
+        input.value = '';
+    });
+
+    // Clear step input fields
+    const stepInputsArray = Array.from(stepInputs);
+    stepInputsArray.forEach(input => {
+        input.value = '';
+    });
+
+    // Save recipes to local storage
+    saveRecipesToStorage(recipes);
+
+    // Display the updated recipe list
+    displayRecipeList();
+
+    alert("Recepte veiksmīgi pievienota!");
+}
 
         function toggleStrikethrough(checkbox) {
             const listItem = checkbox.parentNode;
@@ -344,27 +383,27 @@
                 <h2>Pievienot jaunu recepti</h2>
                 <form onsubmit="addRecipe(event)">
                     <label for="new-title">Nosaukums:</label>
-                    <input type="text" id="new-title" required>
+                    <input type="text" id="new-title" style="width: calc(100% - 10px);" required>
 
                     <div id="ingredients-section">
                         <h3>Sastāvdaļas:</h3>
                         <table id="ingredients-table">
                             <tr>
                                 <td><input type="text" class="ingredient-input awesomplete" placeholder="Sastāvdaļa"></td>
-                                <td><input type="text" class="quantity-input" placeholder="Daudzums"></td>
+                                <td><input type="text" class="quantity-input" placeholder="Daudzums" style="width: calc(50% - 10px);"></td>
                             </tr>
                         </table>
-                        <button type="button" onclick="addRow('ingredients-table')">Pievienot vēl</button>
+                        <button type="button" onclick="addRow('ingredients-table')">➕</button>
                     </div>
 
                     <div id="steps-section">
                         <h3>Soļi:</h3>
                         <table id="steps-list">
 							<tr>
-								<td><input type="text" class="step-input" placeholder="Soļa apraksts"></td>
+								<td><input type="text" class="step-input" placeholder="Soļa apraksts" style="width: calc(100% - 20px);"></td>
 							</tr>
                         </table>
-                        <button type="button" onclick="addRow('steps-list')">Pievienot vēl</button>
+                        <button type="button" onclick="addRow('steps-list')">➕</button>
                     </div>
 
                     <button type="submit">Pievienot recepti</button>

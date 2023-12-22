@@ -289,29 +289,29 @@
 }
 
         function generateRecipe() {
-            const ingredient1 = document.getElementById("ingredient1").value;
-            const ingredient2 = document.getElementById("ingredient2").value;
-            const ingredient3 = document.getElementById("ingredient3").value;
+    const ingredient1 = document.getElementById("ingredient1").value;
+    const ingredient2 = document.getElementById("ingredient2").value;
+    const ingredient3 = document.getElementById("ingredient3").value;
 
-            const matchingRecipes = recipes.filter(recipe => {
-                const ingredients = recipe.ingredients.map(ingredient => ingredient.toLowerCase());
-                return !ingredient1 && !ingredient2 && !ingredient3 ||
-                    ingredients.includes(ingredient1.toLowerCase()) ||
-                    ingredients.includes(ingredient2.toLowerCase()) ||
-                    ingredients.includes(ingredient3.toLowerCase());
-            });
+    const matchingRecipes = recipes.filter(recipe => {
+        const ingredients = recipe.ingredients.map(ingredient => ingredient.toLowerCase());
+        return !ingredient1 && !ingredient2 && !ingredient3 ||
+            ingredients.includes(ingredient1.toLowerCase()) ||
+            ingredients.includes(ingredient2.toLowerCase()) ||
+            ingredients.includes(ingredient3.toLowerCase());
+    });
 
-            if (matchingRecipes.length > 0) {
-                const randomRecipe = matchingRecipes[Math.floor(Math.random() * matchingRecipes.length)];
-                showRecipeDetails(randomRecipe);
-            } else {
-                document.getElementById("result").innerHTML = `<p>Ar šīm sastāvdaļām recepšu vēl nav.</p>`;
-            }
-        }
-
-        function showRecipeDetails(recipe) {
     const resultDiv = document.getElementById("result");
 
+    if (matchingRecipes.length > 0) {
+        const randomRecipe = matchingRecipes[Math.floor(Math.random() * matchingRecipes.length)];
+        showRecipeDetails(randomRecipe, resultDiv);
+    } else {
+        resultDiv.innerHTML = `<p>Ar šīm sastāvdaļām recepšu vēl nav.</p>`;
+    }
+}
+
+function showRecipeDetails(recipe, resultDiv) {
     if (resultDiv) {
         resultDiv.innerHTML = `<p style="text-align: center; font-weight: bold;">[${recipe.title}]</p>`;
         resultDiv.innerHTML += `<p style="text-align: center;"><strong>Sastāvdaļas:</strong></p>`;
@@ -324,8 +324,6 @@
         });
     }
 }
-
-
 
         function addRecipe(event) {
     event.preventDefault();
@@ -440,13 +438,13 @@
         <div class="section-container">
             <div class="randomizer-section">
                 <label for="ingredient1">Ievadi sastāvdaļu:</label>
-                <input type="text" id="ingredient1" class="awesomplete" placeholder="Ievadi sastāvdaļu" data-list=""><br>
+                <input type="text" id="ingredient1" class="awesomplete" data-list=""><br>
 
                 <label for="ingredient2">Ievadi sastāvdaļu:</label>
-                <input type="text" id="ingredient2" class="awesomplete" placeholder="Ievadi sastāvdaļu" data-list=""><br>
+                <input type="text" id="ingredient2" class="awesomplete" data-list=""><br>
 
                 <label for="ingredient3">Ievadi sastāvdaļu:</label>
-                <input type="text" id="ingredient3" class="awesomplete" placeholder="Ievadi sastāvdaļu" data-list=""><br>
+                <input type="text" id="ingredient3" class="awesomplete" data-list=""><br>
 
                 <button onclick="generateRecipe()">Atrast recepti</button>
                 <div id="result"></div>

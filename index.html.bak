@@ -178,10 +178,13 @@
         const rowsPerColumn = 15;
 
         // Calculate the number of columns needed
-        const numColumns = Math.ceil(sortedRecipes.length / rowsPerColumn);
+        const numColumns = 2; // Fixed to two columns
+
+        // Calculate the number of rows needed
+        const numRows = Math.ceil(sortedRecipes.length / numColumns);
 
         // Create the table structure
-        for (let i = 0; i < rowsPerColumn; i++) {
+        for (let i = 0; i < numRows; i++) {
             const row = recipeListTable.insertRow();
             for (let j = 0; j < numColumns; j++) {
                 const cell = row.insertCell();
@@ -192,14 +195,14 @@
         // Populate the table with recipe data
         for (let i = 0; i < sortedRecipes.length; i++) {
             const recipe = sortedRecipes[i];
-            const rowIdx = i % rowsPerColumn;
-            const colIdx = Math.floor(i / rowsPerColumn);
+            const rowIdx = i % numRows;
+            const colIdx = Math.floor(i / numRows);
 
             const cell = recipeListTable.rows[rowIdx].cells[colIdx];
             cell.innerHTML = `<span>${recipe.title}</span> <span class="remove-button" onclick="deleteRecipe(${i})">❌</span>`;
 
             // Check if we need to add a new row
-            if (i + 1 === rowsPerColumn && i < sortedRecipes.length - 1) {
+            if (i + 1 === numRows && i < sortedRecipes.length - 1) {
                 const newRow = recipeListTable.insertRow();
                 for (let j = 0; j < numColumns; j++) {
                     const newCell = newRow.insertCell();
@@ -209,6 +212,7 @@
         }
     }
 }
+
 
         function addRow(tableId) {
     const table = document.getElementById(tableId);
@@ -436,13 +440,13 @@
         <div class="section-container">
             <div class="randomizer-section">
                 <label for="ingredient1">Ievadi sastāvdaļu:</label>
-                <input type="text" id="ingredient1" class="awesomplete" placeholder="Ievadi sastāvdaļu" data-list=""><br>
+                <input type="text" id="ingredient1" class="awesomplete" data-list=""><br>
 
                 <label for="ingredient2">Ievadi sastāvdaļu:</label>
-                <input type="text" id="ingredient2" class="awesomplete" placeholder="Ievadi sastāvdaļu" data-list=""><br>
+                <input type="text" id="ingredient2" class="awesomplete" data-list=""><br>
 
                 <label for="ingredient3">Ievadi sastāvdaļu:</label>
-                <input type="text" id="ingredient3" class="awesomplete" placeholder="Ievadi sastāvdaļu" data-list=""><br>
+                <input type="text" id="ingredient3" class="awesomplete" data-list=""><br>
 
                 <button onclick="generateRecipe()">Atrast recepti</button>
                 <div id="result"></div>

@@ -517,12 +517,11 @@
         <div class="section-container">
             <div class="randomizer-section">
                 <h2>Atrast recepti</h2>
-                <label for="ingredient1">Ievadi sastāvdaļas, ko vēlies izmantot:</label><br>
-                <input type="text" id="ingredient1" class="awesomplete" data-list="" style="width: 100%;"><br>
+                <input type="text" placeholder="Sastāvdaļa, ko vēlies izmantot" id="ingredient1" class="awesomplete" data-list="" style="width: 100%;"><br>
 
-                <input type="text" id="ingredient2" class="awesomplete" data-list="" style="width: 100%;"><br>
+                <input type="text" placeholder="Sastāvdaļa, ko vēlies izmantot" id="ingredient2" class="awesomplete" data-list="" style="width: 100%;"><br>
 
-                <input type="text" id="ingredient3" class="awesomplete" data-list="" style="width: 100%;"><br>
+                <input type="text" placeholder="Sastāvdaļa, ko vēlies izmantot" id="ingredient3" class="awesomplete" data-list="" style="width: 100%;"><br>
 
                 <button class="lielapoga" onclick="generateRecipe()">Atrast recepti</button>
                 <div id="result"></div>

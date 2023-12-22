@@ -15,16 +15,9 @@ jobs:
 
       - name: Update recipes.json
         run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          echo '{"recipes": []}' > recipes.json
           git add recipes.json
           git commit -m "Update recipes.json" || true
           git push https://${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }}
-
-      - name: Push changes
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add recipes.json
-          git commit -m "Update recipes.json" || true
-          git push https://${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }} --follow-tags ${{ github.sha }}

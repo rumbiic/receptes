@@ -127,16 +127,19 @@
     </style>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function () {
             const inputs = document.querySelectorAll('.awesomplete');
             inputs.forEach(input => {
-                const awesomplete = new Awesomplete(input, { minChars: 1, list: [] });
+                const awesomplete = new Awesomplete(input, {
+                    minChars: 1,
+                    list: []
+                });
                 updateAwesompleteList(awesomplete);
             });
 
             // Initialize recipes from local storage
             recipes = getRecipesFromStorage();
-			recipes = recipes.filter(recipe => !recipe.test);
+            recipes = recipes.filter(recipe => !recipe.test);
 
             // Display the initial recipe list
             displayRecipeList();
@@ -165,114 +168,113 @@
         let recipes = getRecipesFromStorage();
 
         function displayRecipeList() {
-    const recipeListTable = document.getElementById("recipe-list-table");
+            const recipeListTable = document.getElementById("recipe-list-table");
 
-    if (recipeListTable) {
-        // Clear existing table content
-        recipeListTable.innerHTML = "";
+            if (recipeListTable) {
+                // Clear existing table content
+                recipeListTable.innerHTML = "";
 
-        // Sort recipes alphabetically
-        const sortedRecipes = recipes.slice().sort((a, b) => a.title.localeCompare(b.title));
+                // Sort recipes alphabetically
+                const sortedRecipes = recipes.slice().sort((a, b) => a.title.localeCompare(b.title));
 
-        // Determine the number of rows per column
-        const rowsPerColumn = 15;
+                // Determine the number of rows per column
+                const rowsPerColumn = 15;
 
-        // Calculate the number of columns needed
-        const numColumns = 2; // Fixed to two columns
+                // Calculate the number of columns needed
+                const numColumns = 2; // Fixed to two columns
 
-        // Calculate the number of rows needed
-        const numRows = Math.ceil(sortedRecipes.length / numColumns);
+                // Calculate the number of rows needed
+                const numRows = Math.ceil(sortedRecipes.length / numColumns);
 
-        // Create the table structure
-        for (let i = 0; i < numRows; i++) {
-            const row = recipeListTable.insertRow();
-            for (let j = 0; j < numColumns; j++) {
-                const cell = row.insertCell();
-                cell.innerHTML = "&nbsp;"; // Add a non-breaking space to ensure the cell is not collapsed
-            }
-        }
+                // Create the table structure
+                for (let i = 0; i < numRows; i++) {
+                    const row = recipeListTable.insertRow();
+                    for (let j = 0; j < numColumns; j++) {
+                        const cell = row.insertCell();
+                        cell.innerHTML = "&nbsp;"; // Add a non-breaking space to ensure the cell is not collapsed
+                    }
+                }
 
-        // Populate the table with recipe data
-        for (let i = 0; i < sortedRecipes.length; i++) {
-            const recipe = sortedRecipes[i];
-            const rowIdx = i % numRows;
-            const colIdx = Math.floor(i / numRows);
+                // Populate the table with recipe data
+                for (let i = 0; i < sortedRecipes.length; i++) {
+                    const recipe = sortedRecipes[i];
+                    const rowIdx = i % numRows;
+                    const colIdx = Math.floor(i / numRows);
 
-            const cell = recipeListTable.rows[rowIdx].cells[colIdx];
-            cell.innerHTML = `<span>${recipe.title}</span> <span class="remove-button" onclick="deleteRecipe(${i})">❌</span>`;
+                    const cell = recipeListTable.rows[rowIdx].cells[colIdx];
+                    cell.innerHTML = `<span>${recipe.title}</span> <span class="remove-button" onclick="deleteRecipe(${i})">❌</span>`;
 
-            // Check if we need to add a new row
-            if (i + 1 === numRows && i < sortedRecipes.length - 1) {
-                const newRow = recipeListTable.insertRow();
-                for (let j = 0; j < numColumns; j++) {
-                    const newCell = newRow.insertCell();
-                    newCell.innerHTML = "&nbsp;";
+                    // Check if we need to add a new row
+                    if (i + 1 === numRows && i < sortedRecipes.length - 1) {
+                        const newRow = recipeListTable.insertRow();
+                        for (let j = 0; j < numColumns; j++) {
+                            const newCell = newRow.insertCell();
+                            newCell.innerHTML = "&nbsp;";
+                        }
+                    }
                 }
             }
         }
-    }
-}
-
 
         function addRow(tableId) {
-    const table = document.getElementById(tableId);
+            const table = document.getElementById(tableId);
 
-    if (table) {
-        if (tableId === 'ingredients-table') {
-            const newRow = table.insertRow();
-            const cell1 = newRow.insertCell(0);
-            const cell2 = newRow.insertCell(1);
+            if (table) {
+                if (tableId === 'ingredients-table') {
+                    const newRow = table.insertRow();
+                    const cell1 = newRow.insertCell(0);
+                    const cell2 = newRow.insertCell(1);
 
-            const inputIngredient = document.createElement("input");
-            inputIngredient.type = "text";
-            inputIngredient.classList.add("ingredient-input", "awesomplete");
-            inputIngredient.placeholder = "Sastāvdaļa";
+                    const inputIngredient = document.createElement("input");
+                    inputIngredient.type = "text";
+                    inputIngredient.classList.add("ingredient-input", "awesomplete");
+                    inputIngredient.placeholder = "Sastāvdaļa";
 
-            const inputQuantity = document.createElement("input");
-            inputQuantity.type = "text";
-            inputQuantity.classList.add("quantity-input");
-            inputQuantity.placeholder = "Daudzums";
+                    const inputQuantity = document.createElement("input");
+                    inputQuantity.type = "text";
+                    inputQuantity.classList.add("quantity-input");
+                    inputQuantity.placeholder = "Daudzums";
 
-            cell1.appendChild(inputIngredient);
-            cell2.appendChild(inputQuantity);
+                    cell1.appendChild(inputIngredient);
+                    cell2.appendChild(inputQuantity);
 
-            const removeButton = document.createElement("span");
-            removeButton.textContent = "❌";
-            removeButton.classList.add("remove-button");
-            removeButton.onclick = function () {
-                removeRow(tableId, newRow.rowIndex);
-            };
+                    const removeButton = document.createElement("span");
+                    removeButton.textContent = "❌";
+                    removeButton.classList.add("remove-button");
+                    removeButton.onclick = function () {
+                        removeRow(tableId, newRow.rowIndex);
+                    };
 
-            newRow.appendChild(removeButton);
-        } else if (tableId === 'steps-list') {
-            const tbody = table.querySelector("tbody");
+                    newRow.appendChild(removeButton);
+                } else if (tableId === 'steps-list') {
+                    const tbody = table.querySelector("tbody");
 
-            if (tbody) {
-                const tr = document.createElement("tr");
-                const td = document.createElement("td");
+                    if (tbody) {
+                        const tr = document.createElement("tr");
+                        const td = document.createElement("td");
 
-                const inputStep = document.createElement("input");
-                inputStep.type = "text";
-                inputStep.classList.add("step-input");
-                inputStep.placeholder = "Soļa apraksts";
+                        const inputStep = document.createElement("input");
+                        inputStep.type = "text";
+                        inputStep.classList.add("step-input");
+                        inputStep.placeholder = "Soļa apraksts";
 
-                td.appendChild(inputStep);
+                        td.appendChild(inputStep);
 
-                const removeButton = document.createElement("span");
-                removeButton.textContent = "❌";
-                removeButton.classList.add("remove-button");
-                removeButton.onclick = function () {
-                    removeRow(tableId, tr.rowIndex);
-                };
+                        const removeButton = document.createElement("span");
+                        removeButton.textContent = "❌";
+                        removeButton.classList.add("remove-button");
+                        removeButton.onclick = function () {
+                            removeRow(tableId, tr.rowIndex);
+                        };
 
-                td.appendChild(removeButton);
-                tr.appendChild(td);
+                        td.appendChild(removeButton);
+                        tr.appendChild(td);
 
-                tbody.appendChild(tr);
+                        tbody.appendChild(tr);
+                    }
+                }
             }
         }
-    }
-}
 
         function removeRow(tableId, rowIndex) {
             const table = document.getElementById(tableId);
@@ -281,130 +283,145 @@
                 table.deleteRow(rowIndex);
             }
         }
-		
-		function removeTestRecipes() {
-    recipes = recipes.filter(recipe => !recipe.test);
-    saveRecipesToStorage(recipes);
-    displayRecipeList();
-}
+
+        function removeTestRecipes() {
+            recipes = recipes.filter(recipe => !recipe.test);
+            saveRecipesToStorage(recipes);
+            displayRecipeList();
+        }
 
         function generateRecipe() {
-    const ingredient1 = document.getElementById("ingredient1").value;
-    const ingredient2 = document.getElementById("ingredient2").value;
-    const ingredient3 = document.getElementById("ingredient3").value;
+            const ingredient1 = document.getElementById("ingredient1").value;
+            const ingredient2 = document.getElementById("ingredient2").value;
+            const ingredient3 = document.getElementById("ingredient3").value;
 
-    const matchingRecipes = recipes.filter(recipe => {
-        const ingredients = recipe.ingredients.map(ingredient => ingredient.toLowerCase());
-        return !ingredient1 && !ingredient2 && !ingredient3 ||
-            ingredients.includes(ingredient1.toLowerCase()) ||
-            ingredients.includes(ingredient2.toLowerCase()) ||
-            ingredients.includes(ingredient3.toLowerCase());
-    });
+            const matchingRecipes = recipes.filter(recipe => {
+                const ingredients = recipe.ingredients.map(ingredient => ingredient.toLowerCase());
+                return !ingredient1 && !ingredient2 && !ingredient3 ||
+                    ingredients.includes(ingredient1.toLowerCase()) ||
+                    ingredients.includes(ingredient2.toLowerCase()) ||
+                    ingredients.includes(ingredient3.toLowerCase());
+            });
 
-    const resultDiv = document.getElementById("result");
+            const resultDiv = document.getElementById("result");
 
-    if (matchingRecipes.length > 0) {
-        const randomRecipe = matchingRecipes[Math.floor(Math.random() * matchingRecipes.length)];
-        showRecipeDetails(randomRecipe, resultDiv);
-    } else { 
-        resultDiv.innerHTML = `<p>Ar šīm sastāvdaļām recepšu vēl nav.</p>`;
-    }
-}
-
-function showRecipeDetails(recipe) {
-    const resultDiv = document.getElementById("result");
-
-    if (resultDiv) {
-        resultDiv.innerHTML = `<p style="text-align: center; font-weight: bold;">${recipe.title}</p>`;
-
-        // Display ingredients
-        resultDiv.innerHTML += `<p style="text-align: center;"><strong>Sastāvdaļas:</strong></p>`;
-        for (let i = 0; i < recipe.ingredients.length; i++) {
-            const ingredient = recipe.ingredients[i];
-            const quantity = recipe.ingredientsQuantities ? recipe.ingredientsQuantities[i] : null;
-            resultDiv.innerHTML += `<div style="padding-bottom: 5px;"><input type="checkbox" class="ingredient-checkbox" onchange="toggleStrikethrough(this)"> ${i + 1}. ${ingredient}${quantity ? `, quantity ${quantity}` : ''}</div>`;
+            if (matchingRecipes.length > 0) {
+                const randomRecipe = matchingRecipes[Math.floor(Math.random() * matchingRecipes.length)];
+                showRecipeDetails(randomRecipe, resultDiv);
+            } else {
+                resultDiv.innerHTML = `<p>Ar šīm sastāvdaļām recepšu vēl nav.</p>`;
+            }
         }
 
-        // Display steps
-        resultDiv.innerHTML += `<p style="text-align: center;"><strong>Pagatavošanas soļi:</strong></p>`;
-        for (let i = 0; i < recipe.steps.length; i++) {
-            const step = recipe.steps[i];
-            resultDiv.innerHTML += `<div style="padding-bottom: 5px;"><input type="checkbox" class="step-checkbox" onchange="toggleStrikethrough(this)"> ${i + 1}. ${step}</div>`;
+        function showRecipeDetails(recipe) {
+            const resultDiv = document.getElementById("result");
+
+            if (resultDiv) {
+                resultDiv.innerHTML = `<p style="text-align: center; font-weight: bold;">${recipe.title}</p>`;
+
+                // Display ingredients
+                resultDiv.innerHTML += `<p style="text-align: center;"><strong>Sastāvdaļas:</strong></p>`;
+                for (let i = 0; i < recipe.ingredients.length; i++) {
+                    const ingredient = recipe.ingredients[i];
+                    const quantity = recipe.ingredientsQuantities ? recipe.ingredientsQuantities[i] : null;
+                    resultDiv.innerHTML += `<div style="padding-bottom: 5px;"><input type="checkbox" class="ingredient-checkbox" onchange="toggleStrikethrough(this)"> ${i + 1}. ${ingredient}${quantity ? `, quantity ${quantity}` : ''}</div>`;
+                }
+
+                // Display steps
+                resultDiv.innerHTML += `<p style="text-align: center;"><strong>Pagatavošanas soļi:</strong></p>`;
+                for (let i = 0; i < recipe.steps.length; i++) {
+                    const step = recipe.steps[i];
+                    resultDiv.innerHTML += `<div style="padding-bottom: 5px;"><input type="checkbox" class="step-checkbox" onchange="toggleStrikethrough(this)"> ${i + 1}. ${step}</div>`;
+                }
+            }
         }
-    }
-}
-
-
 
         function addRecipe(event) {
-    event.preventDefault();
+            event.preventDefault();
 
-    const newTitleElement = document.getElementById("new-title");
-    const newIngredientsElement = document.getElementById("ingredients-table");
-    const newStepsElement = document.getElementById("steps-list");
+            const newTitleElement = document.getElementById("new-title");
+            const newIngredientsElement = document.getElementById("ingredients-table");
+            const newStepsElement = document.getElementById("steps-list");
 
-    let newTitle = "";  
-    const newIngredients = [];
-    const newSteps = [];
+            let newTitle = "";
+            const newIngredients = [];
+            const newIngredientsQuantities = [];
+            const newSteps = [];
 
-    // Get new title
-    if (newTitleElement) {
-        newTitle = newTitleElement.value;
-    } else {
-        alert("Aizpildi visus laukus");
-        return;
-    }
+            // Get new title
+            if (newTitleElement) {
+                newTitle = newTitleElement.value;
+            } else {
+                alert("Aizpildi visus laukus");
+                return;
+            }
 
-    // Get new ingredients
-    const ingredientInputs = newIngredientsElement.querySelectorAll('.ingredient-input');
-    ingredientInputs.forEach(input => {
-        const value = input.value.trim();
-        if (value) newIngredients.push(value);
-    });
+            // Get new ingredients and quantities
+            const ingredientInputs = newIngredientsElement.querySelectorAll('.ingredient-input');
+            const quantityInputs = newIngredientsElement.querySelectorAll('.quantity-input');
 
-    // Get new steps
-    const stepInputs = newStepsElement.querySelectorAll('.step-input');
-    stepInputs.forEach(input => {
-        const value = input.value.trim();
-        if (value) newSteps.push(value);
-    });
+            ingredientInputs.forEach((input, index) => {
+                const value = input.value.trim();
+                if (value) {
+                    newIngredients.push(value);
 
-    // Check if required fields are filled
-    if (!newTitle || newIngredients.length === 0 || newSteps.length === 0) {
-        alert("Aizpildi visus laukus");
-        return;
-    }
+                    // Gather quantity values based on the index
+                    const quantityInput = quantityInputs[index];
+                    const quantityValue = quantityInput ? quantityInput.value.trim() : null;
+                    newIngredientsQuantities.push(quantityValue);
+                }
+            });
 
-    // Add the new recipe to the recipes array
-    recipes.push({
-        title: newTitle,
-        ingredients: newIngredients,
-        steps: newSteps
-    });
+            // Get new steps
+            const stepInputs = newStepsElement.querySelectorAll('.step-input');
+            stepInputs.forEach(input => {
+                const value = input.value.trim();
+                if (value) newSteps.push(value);
+            });
 
-    // Clear input fields
-    newTitleElement.value = '';
-    
-    // Clear ingredient input fields
-    const ingredientInputsArray = Array.from(ingredientInputs);
-    ingredientInputsArray.forEach(input => {
-        input.value = '';
-    });
+            // Check if required fields are filled
+            if (!newTitle || newIngredients.length === 0 || newSteps.length === 0) {
+                alert("Aizpildi visus laukus");
+                return;
+            }
 
-    // Clear step input fields
-    const stepInputsArray = Array.from(stepInputs);
-    stepInputsArray.forEach(input => {
-        input.value = '';
-    });
+            // Add the new recipe to the recipes array
+            recipes.push({
+                title: newTitle,
+                ingredients: newIngredients,
+                ingredientsQuantities: newIngredientsQuantities,
+                steps: newSteps
+            });
 
-    // Save recipes to local storage
-    saveRecipesToStorage(recipes);
+            // Clear input fields
+            newTitleElement.value = '';
 
-    // Display the updated recipe list
-    displayRecipeList();
+            // Clear ingredient input fields
+            const ingredientInputsArray = Array.from(ingredientInputs);
+            ingredientInputsArray.forEach(input => {
+                input.value = '';
+            });
 
-    alert("Recepte veiksmīgi pievienota!");
-}
+            // Clear quantity input fields
+            const quantityInputsArray = Array.from(quantityInputs);
+            quantityInputsArray.forEach(input => {
+                input.value = '';
+            });
+
+            // Clear step input fields
+            const stepInputsArray = Array.from(stepInputs);
+            stepInputsArray.forEach(input => {
+                input.value = '';
+            });
+
+            // Save recipes to local storage
+            saveRecipesToStorage(recipes);
+
+            // Display the updated recipe list
+            displayRecipeList();
+
+            alert("Recepte veiksmīgi pievienota!");
+        }
 
         function toggleStrikethrough(checkbox) {
             const listItem = checkbox.parentNode;
@@ -420,23 +437,23 @@ function showRecipeDetails(recipe) {
             saveRecipesToStorage(recipes);
             displayRecipeList();
         }
-        
+
         // Adding test recipes
         recipes.push({
-    title: "Rīsi ar olām",
-    ingredients: ["Rīsi", "Olas", "Panna"],
-    ingredientsQuantities: ["200g", "2", "1 šķīvis"],
-    steps: ["Uzvāri rīsus", "Liec pannā", "Pievieno olas un sacep visu"],
-    test: true
-});
+            title: "Rīsi ar olām",
+            ingredients: ["Rīsi", "Olas", "Panna"],
+            ingredientsQuantities: ["200g", "2", "1 šķīvis"],
+            steps: ["Uzvāri rīsus", "Liec pannā", "Pievieno olas un sacep visu"],
+            test: true
+        });
 
-recipes.push({
-    title: "Pelmeņi ar sinepēm",
-    ingredients: ["Pelmeņi", "Sinepes"],
-    ingredientsQuantities: ["500g", "1 ēd.k.", null],
-    steps: ["Uzvāri pelmeņus", "Pievieno sinepes", "Labu apetīti!"],
-    test: true
-});
+        recipes.push({
+            title: "Pelmeņi ar sinepēm",
+            ingredients: ["Pelmeņi", "Sinepes"],
+            ingredientsQuantities: ["500g", "1 ēd.k.", null],
+            steps: ["Uzvāri pelmeņus", "Pievieno sinepes", "Labu apetīti!"],
+            test: true
+        });
 
         saveRecipesToStorage(recipes);
         displayRecipeList();

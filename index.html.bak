@@ -65,7 +65,6 @@
 
         table {
             width: 100%;
-            margin-bottom: 10px;
         }
 
         td {
@@ -105,8 +104,8 @@
         }
 
         .step-input {
-            width: 90%;
-            margin-right: 10%;
+            width: 87%;
+            margin-right: 3%;
             box-sizing: border-box;
         }
 
@@ -149,6 +148,7 @@
         .remove-button {
             width: 10%;
 			box-sizing: border-box;
+			cursor: pointer;
         }
 
         .list_checkbox {

@@ -183,6 +183,14 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+		
+		fetch('https://raw.githubusercontent.com/rumbiic/receptes/main/recipes.json')
+                .then(response => response.json())
+                .then(data => {
+                    recipes = data;
+                    displayRecipeList();
+                })
+                .catch(error => console.error('Error loading recipes:', error));
             const inputs = document.querySelectorAll('.awesomplete');
             inputs.forEach(input => {
                 const awesomplete = new Awesomplete(input, {
@@ -421,27 +429,26 @@
         }
 
         function showRecipeDetails(recipe) {
-            const resultDiv = document.getElementById("result");
+    const resultDiv = document.getElementById("result");
 
-            if (resultDiv) {
-                resultDiv.innerHTML = `<p style="text-align: center; font-weight: bold;">${recipe.title}</p>`;
+    if (resultDiv) {
+        resultDiv.innerHTML = `<p style="text-align: center; font-weight: bold;">${recipe.title}</p>`;
 
-                // Display ingredients
-                resultDiv.innerHTML += `<p style="text-align: center;"><strong>Sastāvdaļas:</strong></p>`;
-                for (let i = 0; i < recipe.ingredients.length; i++) {
-                    const ingredient = recipe.ingredients[i];
-                    const quantity = recipe.ingredientsQuantities ? recipe.ingredientsQuantities[i] : null;
-                    resultDiv.innerHTML += `<div class="list_checkbox"><input type="checkbox" class="ingredient-checkbox" onchange="toggleStrikethrough(this)"> ${ingredient}${quantity ? `, ${quantity}` : ''}</div>`;
-                }
-
-                // Display steps
-                resultDiv.innerHTML += `<p style="text-align: center;"><strong>Pagatavošanas soļi:</strong></p>`;
-                for (let i = 0; i < recipe.steps.length; i++) {
-                    const step = recipe.steps[i];
-                    resultDiv.innerHTML += `<div div class="list_checkbox"><input type="checkbox" class="step-checkbox" onchange="toggleStrikethrough(this)"> ${step}</div>`;
-                }
-            }
+        // Display ingredients
+        resultDiv.innerHTML += `<p style="text-align: center;"><strong>Sastāvdaļas:</strong></p>`;
+        for (let i = 0; i < recipe.ingredients.length; i++) {
+            const ingredient = recipe.ingredients[i];
+            resultDiv.innerHTML += `<div class="list_checkbox"><input type="checkbox" class="ingredient-checkbox" onchange="toggleStrikethrough(this)"> ${ingredient.name}${ingredient.quantity ? `, ${ingredient.quantity}` : ''}</div>`;
         }
+
+        // Display steps
+        resultDiv.innerHTML += `<p style="text-align: center;"><strong>Pagatavošanas soļi:</strong></p>`;
+        for (let i = 0; i < recipe.steps.length; i++) {
+            const step = recipe.steps[i];
+            resultDiv.innerHTML += `<div div class="list_checkbox"><input type="checkbox" class="step-checkbox" onchange="toggleStrikethrough(this)"> ${step}</div>`;
+        }
+    }
+}
 
         function addRecipe(event) {
             event.preventDefault();

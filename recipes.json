@@ -1,0 +1,36 @@
+[
+    {
+        "title": "Sautēti saldie kartupeļi ar fetas sieru",
+        "ingredients": [
+            {"name": "Saldais kartupelis", "quantity": "1 gab"},
+            {"name": "Fetas siers", "quantity": "1 paka"},
+            {"name": "Briseles kāposti", "quantity": "400g"},
+            {"name": "Ķiploks", "quantity": "daiviņa"},
+            {"name": "Bulgurs", "quantity": "100g"}
+        ],
+        "steps": ["Liek sildīties krāsni 220C", "Paralēli uzvāra bulguru", "Kartupeli sagriež mazos gabalos", "Liek tos cepamajā pannā un pievieno kāpostus", "Pa vidu saliek fetas sieru", "Apslaka visu ar olīveļļu un pārber ar kūpinātu papriku", "Liek cepeškrāsnī uz 40min", "Kad gandrīz gatavs, pieber bulguru un samaisa visu", "Ja pārāk sauss, var pieliet ūdeni (bet ļoti nedaudz)"]
+    },
+    {
+        "title": "Kartupeļi ar štovētiem kāpostiem un biezpienu",
+        "ingredients": [
+            {"name": "Gatavie kartupeļi ar papriku", "quantity": "1 paka"},
+            {"name": "Biezpiens", "quantity": "1/2 paka"},
+            {"name": "Grieķu jogurts", "quantity": "100ml"},
+            {"name": "Štovēti kāposti", "quantity": "1/2 paka"},
+            {"name": "Sāls", "quantity": "bišķi"}
+        ],
+        "steps": ["Uz pannas sasildi kartupeļus", "Sasildi kāpostus", "Sajauc biezpienu ar jogurtu un sāli pēc garšas"]
+    },
+	{
+        "title": "Griķi vai rīsi ar pupiņu mērci",
+        "ingredients": [
+            {"name": "Rīsi", "quantity": "1 paciņa, vai"},
+            {"name": "Griķi", "quantity": "1 paciņa"},
+            {"name": "Kukurūza", "quantity": "1 bundža"},
+            {"name": "Pupiņas", "quantity": "1 bundža"},
+            {"name": "Tomātu mērce", "quantity": "1/2 burka"},
+            {"name": "Šampinjoni", "quantity": "200g"}
+        ],
+        "steps": ["Vāra rīsus vai griķus sālsūdenī", "Sagriež ripās šampinjonus un liek uz pannas cepties", "Kad tie gatavi, pievieno pupas, kukurūzu un sasilda", "Pievieno tomātu mērci un garšvielas", "Kad rīsi uzvārījušies, pasniedz visu kopā"]
+    },
+]

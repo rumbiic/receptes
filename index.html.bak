@@ -199,7 +199,7 @@
             cell.innerHTML = `<span>${recipe.title}</span> <span class="remove-button" onclick="deleteRecipe(${i})">❌</span>`;
 
             // Check if we need to add a new row
-            if (i > 0 && i % (rowsPerColumn * 2) === 0) {
+            if (i > 0 && i % rowsPerColumn === 0) {
                 const newRow = recipeListTable.insertRow();
                 for (let j = 0; j < numColumns; j++) {
                     const newCell = newRow.insertCell();
@@ -209,7 +209,6 @@
         }
     }
 }
-
 
         function addRow(tableId) {
     const table = document.getElementById(tableId);

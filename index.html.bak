@@ -76,6 +76,7 @@
 .step-checkbox {
     transform: scale(1.5);
     margin-right: 8px;
+	height: auto;
 }
         button {
             display: block;

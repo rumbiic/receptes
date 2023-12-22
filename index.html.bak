@@ -86,40 +86,27 @@
 
         const recipesKey = 'prusu_recipes';
 
-        // Function to get unique ingredients from recipes
         function getUniqueIngredients() {
             const allIngredients = recipes.reduce((acc, recipe) => [...acc, ...recipe.ingredients], []);
             return [...new Set(allIngredients)];
         }
 
-        // Function to get recipes from localStorage
         function getRecipesFromStorage() {
             const storedRecipes = localStorage.getItem(recipesKey);
             return storedRecipes ? JSON.parse(storedRecipes) : [];
         }
 
-        // Function to save recipes to localStorage
         function saveRecipesToStorage(recipes) {
             localStorage.setItem(recipesKey, JSON.stringify(recipes));
         }
 
-        // Add your recipes here
         let recipes = getRecipesFromStorage();
 
-        // Function to display the list of recipes
         function displayRecipeList() {
             const recipeListUl = document.getElementById("recipe-list-ul");
             recipeListUl.innerHTML = recipes.map((recipe, index) => `<li>${recipe.title} <button onclick="deleteRecipe(${index})">Dzēst</button></li>`).join('');
         }
 
-        // Function to delete a recipe
-        function deleteRecipe(index) {
-            recipes.splice(index, 1);
-            saveRecipesToStorage(recipes);
-            displayRecipeList();
-        }
-
-        // Initial display of the recipe list
         displayRecipeList();
 
         function generateRecipe() {
@@ -175,8 +162,22 @@
             }
 
             const newTitle = newTitleElement.value;
-            const newIngredients = newIngredientsElement.value.split(',').map(i => i.trim());
-            const newSteps = newStepsElement.value.split(',').map(s => s.trim());
+            const newIngredients = [];
+            const newSteps = [];
+
+            // Gather new ingredients
+            const ingredientInputs = document.querySelectorAll('.ingredient-input');
+            ingredientInputs.forEach(input => {
+                const value = input.value.trim();
+                if (value) newIngredients.push(value);
+            });
+
+            // Gather new steps
+            const stepInputs = document.querySelectorAll('.step-input');
+            stepInputs.forEach(input => {
+                const value = input.value.trim();
+                if (value) newSteps.push(value);
+            });
 
             if (!newTitle || newIngredients.length === 0 || newSteps.length === 0) {
                 alert("Aizpildi visus laukus");
@@ -275,15 +276,6 @@
                 </ul>
             </div>
         </div>
-
-        <script>
-            function displayRecipeList() {
-                const recipeListUl = document.getElementById("recipe-list-ul");
-                recipeListUl.innerHTML = recipes.map((recipe, index) => `<li>${recipe.title} <button onclick="deleteRecipe(${index})">Dzēst</button></li>`).join('');
-            }
-
-            displayRecipeList();
-        </script>
     </div>
 </body>
 </html>

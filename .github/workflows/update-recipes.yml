@@ -1,0 +1,23 @@
+name: Update Recipes
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-recipes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Update recipes.json
+        run: |
+          echo '{"recipes": []}' > recipes.json
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add recipes.json
+          git commit -m "Update recipes.json" || true
+          git push

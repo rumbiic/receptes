@@ -190,7 +190,7 @@
                     recipes = data;
                     displayRecipeList();
                 })
-                .catch(error => console.error('Error loading recipes:', error));
+                .catch(error => console.error('Kļūda, ielādējot receptes:', error));
             const inputs = document.querySelectorAll('.awesomplete');
             inputs.forEach(input => {
                 const awesomplete = new Awesomplete(input, {

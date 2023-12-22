@@ -213,7 +213,15 @@
         function updateAwesompleteList(awesomplete) {
             awesomplete.list = getUniqueIngredients();
         }
-
+		const existingIngredientInputs = document.querySelectorAll('.ingredient-input.awesomplete');
+    existingIngredientInputs.forEach(input => {
+        const awesomplete = new Awesomplete(input, {
+            minChars: 1,
+            list: []
+        });
+        updateAwesompleteList(awesomplete);
+    });
+	
 		const recipeListTable = document.getElementById("recipe-list-table");
     if (recipeListTable) {
         recipeListTable.addEventListener("click", function (event) {

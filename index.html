@@ -297,29 +297,14 @@
     const resultDiv = document.getElementById("result");
     if (resultDiv) {
         resultDiv.innerHTML = `<p style="text-align: center; font-weight: bold;">${recipe.title}</p>`;
-        resultDiv.innerHTML += `<table style="width: 100%;">`;
-
-        // Display Ingredients with Quantities
-        resultDiv.innerHTML += `<tr><td colspan="2" style="font-weight: bold;">Sastāvdaļas:</td></tr>`;
+        resultDiv.innerHTML += `<p style="text-align: center;"><strong>Sastāvdaļas:</strong></p>`;
         recipe.ingredients.forEach((ingredient, index) => {
-            // Assuming corresponding quantity is available at the same index in recipe.quantities array
-            const quantity = recipe.quantities && recipe.quantities[index] ? recipe.quantities[index] : '';
-            resultDiv.innerHTML += `<tr>
-                                    <td><input type="checkbox" class="ingredient-checkbox" onchange="toggleStrikethrough(this)"></td>
-                                    <td>${ingredient}, ${quantity}</td>
-                                </tr>`;
+            resultDiv.innerHTML += `<div><input type="checkbox" class="ingredient-checkbox" onchange="toggleStrikethrough(this)"> ${ingredient}${recipe.ingredientsQuantities[index] ? `, qty ${recipe.ingredientsQuantities[index]}` : ''}</div>`;
         });
-
-        // Display Steps
-        resultDiv.innerHTML += `<tr><td colspan="2" style="font-weight: bold;">Pagatavošanas soļi:</td></tr>`;
+        resultDiv.innerHTML += `<p style="text-align: center;"><strong>Pagatavošanas soļi:</strong></p>`;
         recipe.steps.forEach((step, index) => {
-            resultDiv.innerHTML += `<tr>
-                                    <td><input type="checkbox" class="step-checkbox" onchange="toggleStrikethrough(this)"></td>
-                                    <td>${index + 1}. ${step}</td>
-                                </tr>`;
+            resultDiv.innerHTML += `<div><input type="checkbox" class="step-checkbox" onchange="toggleStrikethrough(this)"> [${index + 1}.] ${step}</div>`;
         });
-
-        resultDiv.innerHTML += `</table>`;
     }
 }
 

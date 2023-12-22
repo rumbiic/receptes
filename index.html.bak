@@ -145,41 +145,56 @@
 
         function displayRecipeList() {
     const recipeListUl = document.getElementById("recipe-list-ul");
+
     if (recipeListUl) {
         // Clear existing list items
         recipeListUl.innerHTML = "";
 
+        // Sort recipes alphabetically
+        const sortedRecipes = recipes.slice().sort((a, b) => a.title.localeCompare(b.title));
+
+        // Determine the number of rows per column
+        const rowsPerColumn = 10;
+
         // Create new list items
-        recipes.forEach((recipe, index) => {
+        for (let i = 0; i < Math.ceil(sortedRecipes.length / rowsPerColumn); i++) {
             const listItem = document.createElement("li");
-            
-            // Create a container div to hold the recipe title and delete button
-            const recipeContainer = document.createElement("div");
-            recipeContainer.style.display = "flex";
-            recipeContainer.style.justifyContent = "space-between";
-            recipeContainer.style.alignItems = "center";
+            listItem.style.display = "flex";
+            listItem.style.justifyContent = "space-between";
 
-            // Create a span for the recipe title
-            const titleSpan = document.createElement("span");
-            titleSpan.textContent = recipe.title;
+            for (let j = 0; j < 2; j++) {
+                const recipeIndex = i * 2 + j;
+                if (recipeIndex < sortedRecipes.length) {
+                    const recipe = sortedRecipes[recipeIndex];
 
-            // Create the delete button (X)
-            const deleteButton = document.createElement("span");
-            deleteButton.textContent = "❌";
-            deleteButton.classList.add("remove-button");
-            deleteButton.onclick = function () {
-                deleteRecipe(index);
-            };
+                    const recipeContainer = document.createElement("div");
+                    recipeContainer.style.flex = "1";
+                    recipeContainer.style.padding = "5px";
 
-            // Append the title and delete button to the container
-            recipeContainer.appendChild(titleSpan);
-            recipeContainer.appendChild(deleteButton);
+                    // Apply coloring for the first 10 rows in each column
+                    if (recipeIndex < rowsPerColumn) {
+                        recipeContainer.style.backgroundColor = "#f2f2f2";
+                    }
 
-            // Append the container to the list item
-            listItem.appendChild(recipeContainer);
+                    const titleSpan = document.createElement("span");
+                    titleSpan.textContent = recipe.title;
+
+                    const deleteButton = document.createElement("span");
+                    deleteButton.textContent = "❌";
+                    deleteButton.classList.add("remove-button");
+                    deleteButton.onclick = function () {
+                        deleteRecipe(recipes.indexOf(recipe));
+                    };
+
+                    recipeContainer.appendChild(titleSpan);
+                    recipeContainer.appendChild(deleteButton);
+
+                    listItem.appendChild(recipeContainer);
+                }
+            }
 
             recipeListUl.appendChild(listItem);
-        });
+        }
     }
 }
 

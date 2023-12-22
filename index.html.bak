@@ -189,7 +189,7 @@
             fetch('https://raw.githubusercontent.com/rumbiic/receptes/main/recipes.json')
                 .then(response => response.json())
                 .then(data => {
-                    recipes = data;
+                    recipes = data.recipes || [];
                     displayRecipeList();
                 })
                 .catch(error => console.error('Kļūda, ielādējot receptes:', error));

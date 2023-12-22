@@ -161,13 +161,13 @@
         const rowsPerColumn = 10;
 
         // Create new list items
-        for (let i = 0; i < Math.ceil(sortedRecipes.length / 2 / rowsPerColumn); i++) {
+        for (let i = 0; i < Math.ceil(sortedRecipes.length / rowsPerColumn); i++) {
             const listItem = document.createElement("li");
             listItem.style.display = "flex";
             listItem.style.justifyContent = "space-between";
 
-            for (let j = 0; j < 2; j++) {
-                const recipeIndex = i * 2 + j;
+            for (let j = 0; j < rowsPerColumn; j++) {
+                const recipeIndex = i * rowsPerColumn + j;
                 if (recipeIndex < sortedRecipes.length) {
                     const recipe = sortedRecipes[recipeIndex];
 
@@ -201,6 +201,7 @@
         }
     }
 }
+
 
 
         function addRow(tableId) {

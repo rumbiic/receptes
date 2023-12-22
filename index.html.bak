@@ -303,13 +303,9 @@
     if (resultDiv) {
         resultDiv.innerHTML = `<p style="text-align: center; font-weight: bold;">${recipe.title}</p>`;
         resultDiv.innerHTML += `<p style="text-align: center;"><strong>Sastāvdaļas:</strong></p>`;
-        recipe.ingredients.forEach((ingredient, index) => {
-            resultDiv.innerHTML += `<div><input type="checkbox" class="ingredient-checkbox" onchange="toggleStrikethrough(this)"> ${ingredient}${recipe.ingredientsQuantities[index] ? `, qty ${recipe.ingredientsQuantities[index]}` : ''}</div>`;
-        });
+        resultDiv.innerHTML += `<div><input type="checkbox" class="ingredient-checkbox" onchange="toggleStrikethrough(this)"> ${recipe.ingredients.join(', ')}</div>`;
         resultDiv.innerHTML += `<p style="text-align: center;"><strong>Pagatavošanas soļi:</strong></p>`;
-        recipe.steps.forEach((step, index) => {
-            resultDiv.innerHTML += `<div><input type="checkbox" class="step-checkbox" onchange="toggleStrikethrough(this)"> [${index + 1}.] ${step}</div>`;
-        });
+        resultDiv.innerHTML += recipe.steps.map((step, index) => `<div><input type="checkbox" class="step-checkbox" onchange="toggleStrikethrough(this)"> [${index + 1}.] ${step}</div>`).join('');
     }
 }
 

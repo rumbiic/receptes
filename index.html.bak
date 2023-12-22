@@ -294,35 +294,44 @@
         }
 
         function addRow(tableId) {
-            const table = document.getElementById(tableId);
+    const table = document.getElementById(tableId);
 
-            if (table) {
-                if (tableId === 'ingredients-table') {
-                    const newRow = table.insertRow();
-                    const cell1 = newRow.insertCell(0);
-                    const cell2 = newRow.insertCell(1);
+    if (table) {
+        if (tableId === 'ingredients-table') {
+            const newRow = table.insertRow();
+            const cell1 = newRow.insertCell(0);
+            const cell2 = newRow.insertCell(1);
 
-                    const inputIngredient = document.createElement("input");
-                    inputIngredient.type = "text";
-                    inputIngredient.classList.add("ingredient-input", "awesomplete");
-                    inputIngredient.placeholder = "Sastāvdaļa";
+            const inputIngredient = document.createElement("input");
+            inputIngredient.type = "text";
+            inputIngredient.classList.add("ingredient-input", "awesomplete");
+            inputIngredient.placeholder = "Sastāvdaļa";
 
-                    const inputQuantity = document.createElement("input");
-                    inputQuantity.type = "text";
-                    inputQuantity.classList.add("quantity-input");
-                    inputQuantity.placeholder = "Daudzums";
+            const inputQuantity = document.createElement("input");
+            inputQuantity.type = "text";
+            inputQuantity.classList.add("quantity-input");
+            inputQuantity.placeholder = "Daudzums";
 
-                    cell1.appendChild(inputIngredient);
-                    cell2.appendChild(inputQuantity);
+            cell1.appendChild(inputIngredient);
+            cell2.appendChild(inputQuantity);
 
-                    const removeButton = document.createElement("span");
-                    removeButton.textContent = "❌";
-                    removeButton.classList.add("remove-button");
-                    removeButton.onclick = function () {
-                        removeRow(tableId, newRow.rowIndex);
-                    };
+            const removeButton = document.createElement("span");
+            removeButton.textContent = "❌";
+            removeButton.classList.add("remove-button");
+            removeButton.onclick = function () {
+                removeRow(tableId, newRow.rowIndex);
+            };
 
-                    newRow.appendChild(removeButton);
+            newRow.appendChild(removeButton);
+
+            // Initialize Awesomplete for the new ingredient input field
+            const awesomplete = new Awesomplete(inputIngredient, {
+                minChars: 1,
+                list: []
+            });
+
+            // Update the Awesomplete list
+            updateAwesompleteList(awesomplete);
                 } else if (tableId === 'steps-list') {
                     const tbody = table.querySelector("tbody");
 

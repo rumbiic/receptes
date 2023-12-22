@@ -91,6 +91,7 @@
             cursor: pointer;
             border-radius: 4px;
             font-size: 16px;
+			transition: background-color 0.3s;
         }
 
         button:hover {
@@ -157,13 +158,15 @@
         }
 
         button.add-button {
-            background: none;
-            margin-top: 0;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-            font-size: 24px;
-            color: green;
+            background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+	margin: auto;
         }
 
         button.lielapoga {
@@ -171,7 +174,7 @@
         }
 
         button.add-button:hover {
-            color: darkgreen;
+            background-color: #2980b9;
         }
     </style>
 
@@ -550,7 +553,7 @@
                                 <td><input type="text" class="quantity-input" placeholder="Daudzums"></td>
                             </tr>
                         </table>
-                        <button type="button" class="add-button" onclick="addRow('ingredients-table')">➕</button>
+                        <button type="button" class="add-button" onclick="addRow('ingredients-table')">Jauna rinda</button>
                     </div>
 
                     <div id="steps-section">
@@ -560,7 +563,7 @@
 								<td><input type="text" class="step-input" placeholder="Soļa apraksts"></td>
 							</tr>
                         </table>
-                        <button type="button" class="add-button" onclick="addRow('steps-list')">➕</button>
+                        <button type="button" class="add-button" onclick="addRow('steps-list')">Jauna rinda</button>
                     </div>
 
                     <button class="lielapoga" type="submit">Pievienot recepti</button>

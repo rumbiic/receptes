@@ -139,40 +139,64 @@
         }
 
         function addRow(tableId) {
-        const table = document.getElementById(tableId);
+    const table = document.getElementById(tableId);
 
-        if (table) {
-            if (tableId === 'ingredients-table') {
-                // (your existing code for ingredients)
-            } else if (tableId === 'steps-list') {
-                const tbody = table.querySelector("tbody");
+    if (table) {
+        if (tableId === 'ingredients-table') {
+            const newRow = table.insertRow();
+            const cell1 = newRow.insertCell(0);
+            const cell2 = newRow.insertCell(1);
 
-                if (tbody) {
-                    const tr = document.createElement("tr");
-                    const td = document.createElement("td");
+            const inputIngredient = document.createElement("input");
+            inputIngredient.type = "text";
+            inputIngredient.classList.add("ingredient-input", "awesomplete");
+            inputIngredient.placeholder = "Sastāvdaļa";
 
-                    const inputStep = document.createElement("input");
-                    inputStep.type = "text";
-                    inputStep.classList.add("step-input");
-                    inputStep.placeholder = "Soļa apraksts";
+            const inputQuantity = document.createElement("input");
+            inputQuantity.type = "text";
+            inputQuantity.classList.add("quantity-input");
+            inputQuantity.placeholder = "Daudzums";
 
-                    td.appendChild(inputStep);
+            cell1.appendChild(inputIngredient);
+            cell2.appendChild(inputQuantity);
 
-                    const removeButton = document.createElement("span");
-                    removeButton.textContent = "❌";
-                    removeButton.classList.add("remove-button");
-                    removeButton.onclick = function () {
-                        removeRow(tableId, tr.rowIndex);
-                    };
+            const removeButton = document.createElement("span");
+            removeButton.textContent = "❌";
+            removeButton.classList.add("remove-button");
+            removeButton.onclick = function () {
+                removeRow(tableId, newRow.rowIndex);
+            };
 
-                    td.appendChild(removeButton);
-                    tr.appendChild(td);
+            newRow.appendChild(removeButton);
+        } else if (tableId === 'steps-list') {
+            const tbody = table.querySelector("tbody");
 
-                    tbody.appendChild(tr);
-                }
+            if (tbody) {
+                const tr = document.createElement("tr");
+                const td = document.createElement("td");
+
+                const inputStep = document.createElement("input");
+                inputStep.type = "text";
+                inputStep.classList.add("step-input");
+                inputStep.placeholder = "Soļa apraksts";
+
+                td.appendChild(inputStep);
+
+                const removeButton = document.createElement("span");
+                removeButton.textContent = "❌";
+                removeButton.classList.add("remove-button");
+                removeButton.onclick = function () {
+                    removeRow(tableId, tr.rowIndex);
+                };
+
+                td.appendChild(removeButton);
+                tr.appendChild(td);
+
+                tbody.appendChild(tr);
             }
         }
     }
+}
 
         function removeRow(tableId, rowIndex) {
             const table = document.getElementById(tableId);

@@ -148,56 +148,39 @@
         let recipes = getRecipesFromStorage();
 
         function displayRecipeList() {
-    const recipeListUl = document.getElementById("recipe-list-ul");
+    const recipeTable = document.getElementById("recipe-list-table");
 
-    if (recipeListUl) {
-        // Clear existing list items
-        recipeListUl.innerHTML = "";
+    if (recipeTable) {
+        // Clear existing table rows
+        recipeTable.innerHTML = "";
 
         // Sort recipes alphabetically
         const sortedRecipes = recipes.slice().sort((a, b) => a.title.localeCompare(b.title));
 
         // Determine the number of rows per column
-        const rowsPerColumn = 10;
+        const rowsPerColumn = 15;
 
-        // Create new list items
-        for (let i = 0; i < Math.ceil(sortedRecipes.length / rowsPerColumn); i++) {
-            const listItem = document.createElement("li");
-            listItem.style.display = "flex";
-            listItem.style.justifyContent = "space-between";
+        // Calculate the number of columns needed
+        const numColumns = Math.ceil(sortedRecipes.length / rowsPerColumn);
 
-            for (let j = 0; j < rowsPerColumn; j++) {
-                const recipeIndex = i * rowsPerColumn + j;
-                if (recipeIndex < sortedRecipes.length) {
-                    const recipe = sortedRecipes[recipeIndex];
+        // Create new table rows
+        for (let i = 0; i < rowsPerColumn; i++) {
+            const row = document.createElement("tr");
 
-                    const recipeContainer = document.createElement("div");
-                    recipeContainer.style.flex = "1";
-                    recipeContainer.style.padding = "5px";
+            for (let j = 0; j < numColumns; j++) {
+                const columnIndex = i + j * rowsPerColumn;
+                if (columnIndex < sortedRecipes.length) {
+                    const recipe = sortedRecipes[columnIndex];
 
-                    // Apply coloring for the first 10 rows in each column
-                    if (recipeIndex < rowsPerColumn) {
-                        recipeContainer.style.backgroundColor = "#f2f2f2";
-                    }
+                    const titleCell = document.createElement("td");
+                    titleCell.style.padding = "5px";
+                    titleCell.textContent = recipe.title;
 
-                    const titleSpan = document.createElement("span");
-                    titleSpan.textContent = recipe.title;
-
-                    const deleteButton = document.createElement("span");
-                    deleteButton.textContent = "❌";
-                    deleteButton.classList.add("remove-button");
-                    deleteButton.onclick = function () {
-                        deleteRecipe(recipes.indexOf(recipe));
-                    };
-
-                    recipeContainer.appendChild(titleSpan);
-                    recipeContainer.appendChild(deleteButton);
-
-                    listItem.appendChild(recipeContainer);
+                    row.appendChild(titleCell);
                 }
             }
 
-            recipeListUl.appendChild(listItem);
+            recipeTable.appendChild(row);
         }
     }
 }

@@ -84,17 +84,33 @@
             margin-bottom: 10px;
         }
 
-        .recipe-list-ul {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
+        .recipe-list-section {
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    overflow: hidden; /* Add overflow to contain floated elements */
 }
 
-.recipe-list-ul li {
-    margin-bottom: 10px;
-    flex: 1 1 calc(50% - 20px);
+#recipe-list-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#recipe-list-table td {
+    border: 1px solid #ddd; /* Add borders to cells */
     padding: 10px;
+    text-align: left;
+    position: relative; /* Relative positioning for absolute X */
+}
+
+#recipe-list-table td span.remove-button {
+    position: absolute;
+    top: 50%;
+    right: 5px; /* Adjust this value as needed */
+    cursor: pointer;
+    transform: translateY(-50%);
 }
 		
 		.remove-button {

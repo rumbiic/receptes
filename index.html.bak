@@ -43,14 +43,6 @@
             box-sizing: border-box;
             margin-bottom: 20px;
         }
-		.recipe-list-section,
-        {
-            width: 48%%; /* Set the width to 100% for each section */
-            background-color: #fff;
-            padding: 20px;
-            box-sizing: border-box;
-            margin-bottom: 20px;
-        }
 
         h1, h2, h3 {
             text-align: center;
@@ -155,14 +147,16 @@
             cell.appendChild(inputQuantity);
         } else if (tableId === 'steps-list') {
             const ol = table.querySelector("ol");
-            const li = document.createElement("li");
-            const inputStep = document.createElement("input");
-            inputStep.type = "text";
-            inputStep.classList.add("step-input");
-            inputStep.placeholder = "Soļa apraksts";
+            if (ol) {
+                const li = document.createElement("li");
+                const inputStep = document.createElement("input");
+                inputStep.type = "text";
+                inputStep.classList.add("step-input");
+                inputStep.placeholder = "Soļa apraksts";
 
-            li.appendChild(inputStep);
-            ol.appendChild(li);
+                li.appendChild(inputStep);
+                ol.appendChild(li);
+            }
         }
     }
 }

@@ -178,7 +178,7 @@
 		#ingredients-table td.qty {
 			width: 30%;
 			box-sizing: border-box;
-		}
+		} 
     </style>
 
     <script>

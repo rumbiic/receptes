@@ -171,7 +171,7 @@
             background-color: #2980b9;
         }
 		
-		#ingredients-list td {
+		#ingredients-table td {
 			border: 1px solid #ddd;
 			text-align: left;
 			position: relative;

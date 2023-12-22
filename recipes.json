@@ -1,4 +1,5 @@
-[
+{
+  "recipes": [
   {
     "title": "Your Recipe Title",
     "ingredients": ["Ingredient 1", "Ingredient 2"],
@@ -6,3 +7,4 @@
     "steps": ["Step 1", "Step 2"]
   }
 ]
+}

@@ -67,8 +67,7 @@
             margin-top: 10px;
         }
 
-        .step-input,
-        .ingredient-input {
+        .step-input {
             width: calc(100% - 30px); /* Adjusted width to accommodate the X button */
         }
 
@@ -244,32 +243,25 @@
         }
 
         function addRecipe(event) {
-            event.preventDefault();
+    event.preventDefault();
 
-            const newTitleElement = document.getElementById("new-title");
-			const newIngredientsElement = document.getElementById("new-ingredients-table"); // Corrected ID
-			const newStepsElement = document.getElementById("new-steps-list"); // Corrected ID
+    const newTitleElement = document.getElementById("new-title");
 
-            if (!newTitleElement || !newIngredientsElement || !newStepsElement) {
-                alert("Aizpildi visus laukus");
-                return;
-            }
+    // Corrected code to get new ingredients and steps
+    const newIngredients = [];
+    const newSteps = [];
 
-            const newTitle = newTitleElement.value;
-            const newIngredients = [];
-            const newSteps = [];
+    const ingredientInputs = document.querySelectorAll('#ingredients-table .ingredient-input');
+    ingredientInputs.forEach(input => {
+        const value = input.value.trim();
+        if (value) newIngredients.push(value);
+    });
 
-            const ingredientInputs = document.querySelectorAll('.ingredient-input');
-            ingredientInputs.forEach(input => {
-                const value = input.value.trim();
-                if (value) newIngredients.push(value);
-            });
-
-            const stepInputs = document.querySelectorAll('.step-input');
-            stepInputs.forEach(input => {
-                const value = input.value.trim();
-                if (value) newSteps.push(value);
-            });
+    const stepInputs = document.querySelectorAll('#steps-list .step-input');
+    stepInputs.forEach(input => {
+        const value = input.value.trim();
+        if (value) newSteps.push(value);
+    });
 
             if (!newTitle || newIngredients.length === 0 || newSteps.length === 0) {
                 alert("Aizpildi visus laukus");

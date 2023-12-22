@@ -243,30 +243,33 @@
         }
 
         function addRecipe(event) {
-    event.preventDefault();
+			event.preventDefault();
 
-    const newTitleElement = document.getElementById("new-title");
+			const newTitleElement = document.getElementById("new-title");
+			let newTitle = "";  // Declare newTitle outside of the if statement
 
-    // Corrected code to get new ingredients and steps
-    const newIngredients = [];
-    const newSteps = [];
+			// Corrected code to get new ingredients and steps
+			const newIngredients = [];
+			const newSteps = [];
 
-    const ingredientInputs = document.querySelectorAll('#ingredients-table .ingredient-input');
-    ingredientInputs.forEach(input => {
-        const value = input.value.trim();
-        if (value) newIngredients.push(value);
-    });
+			const ingredientInputs = document.querySelectorAll('#ingredients-table .ingredient-input');
+			ingredientInputs.forEach(input => {
+				const value = input.value.trim();
+				if (value) newIngredients.push(value);
+			});
 
-    const stepInputs = document.querySelectorAll('#steps-list .step-input');
-    stepInputs.forEach(input => {
-        const value = input.value.trim();
-        if (value) newSteps.push(value);
-    });
+			const stepInputs = document.querySelectorAll('#steps-list .step-input');
+			stepInputs.forEach(input => {
+				const value = input.value.trim();
+				if (value) newSteps.push(value);
+			});
 
-            if (!newTitle || newIngredients.length === 0 || newSteps.length === 0) {
-                alert("Aizpildi visus laukus");
-                return;
-            }
+            if (newTitleElement) {
+        newTitle = newTitleElement.value;
+    } else {
+        alert("Aizpildi visus laukus");
+        return;
+    }
 
             recipes.push({
                 title: newTitle,

@@ -56,10 +56,6 @@
         h1, h2, h3 {
             text-align: center;
         }
-
-        table {
-            width: 100%;
-        }
 		
 		#ingredients-table td {
     padding: 0px; /* Adjust the padding values as needed */
@@ -67,10 +63,6 @@
     position: relative; /* Relative positioning for absolute X */
 	margin: auto;
 }
-		
-		td {
-			padding:0;
-		}
 
 		.ingredient-checkbox,
 .step-checkbox {
@@ -143,6 +135,9 @@
     cursor: pointer;
     font-size: 24px; /* Adjust the font size as needed */
     color: green; /* Change the color to green */
+}
+button.lielapoga {
+    width: 100%;
 }
 
 button.add-button:hover {
@@ -492,15 +487,15 @@ button.add-button:hover {
         <div class="section-container">
             <div class="randomizer-section">
                 <label for="ingredient1">Ievadi sastāvdaļu:</label>
-                <input type="text" id="ingredient1" class="awesomplete" data-list=""><br>
+                <input type="text" id="ingredient1" class="awesomplete" data-list="" style="width: 100%;"><br>
 
                 <label for="ingredient2">Ievadi sastāvdaļu:</label>
-                <input type="text" id="ingredient2" class="awesomplete" data-list=""><br>
+                <input type="text" id="ingredient2" class="awesomplete" data-list="" style="width: 100%;"><br>
 
                 <label for="ingredient3">Ievadi sastāvdaļu:</label>
-                <input type="text" id="ingredient3" class="awesomplete" data-list=""><br>
+                <input type="text" id="ingredient3" class="awesomplete" data-list="" style="width: 100%;"><br>
 
-                <button onclick="generateRecipe()">Atrast recepti</button>
+                <button class="lielapoga" onclick="generateRecipe()">Atrast recepti</button>
                 <div id="result"></div>
             </div>
 
@@ -508,7 +503,7 @@ button.add-button:hover {
                 <h2>Pievienot jaunu recepti</h2>
                 <form onsubmit="addRecipe(event)">
                     <label for="new-title">Nosaukums:</label>
-                    <input type="text" id="new-title" style="width: 253px;" required>
+                    <input type="text" id="new-title" style="width: 100%;" required>
 
                     <div id="ingredients-section">
                         <h3>Sastāvdaļas:</h3>
@@ -531,7 +526,7 @@ button.add-button:hover {
                         <button type="button" class="add-button" onclick="addRow('steps-list')">➕</button>
                     </div>
 
-                    <button type="submit">Pievienot recepti</button>
+                    <button class="lielapoga" type="submit">Pievienot recepti</button>
                 </form>
             </div>
 

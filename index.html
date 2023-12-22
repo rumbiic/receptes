@@ -115,6 +115,7 @@
 
             // Initialize recipes from local storage
             recipes = getRecipesFromStorage();
+			recipes = recipes.filter(recipe => !recipe.test);
 
             // Display the initial recipe list
             displayRecipeList();
@@ -249,6 +250,12 @@
                 table.deleteRow(rowIndex);
             }
         }
+		
+		function removeTestRecipes() {
+    recipes = recipes.filter(recipe => !recipe.test);
+    saveRecipesToStorage(recipes);
+    displayRecipeList();
+}
 
         function generateRecipe() {
             const ingredient1 = document.getElementById("ingredient1").value;
@@ -267,7 +274,7 @@
                 const randomRecipe = matchingRecipes[Math.floor(Math.random() * matchingRecipes.length)];
                 showRecipeDetails(randomRecipe);
             } else {
-                document.getElementById("result").innerHTML = `<p>No recipes found with the specified ingredients.</p>`;
+                document.getElementById("result").innerHTML = `<p>Ar šīm sastāvdaļām recepšu vēl nav.</p>`;
             }
         }
 
@@ -371,13 +378,15 @@
         recipes.push({
             title: "Rīsi ar olām",
             ingredients: ["Rīsi", "Olas", "Panna"],
-            steps: ["Uzvāri rīsus", "Liec pannā", "Pievieno olas un sacep visu"]
+            steps: ["Uzvāri rīsus", "Liec pannā", "Pievieno olas un sacep visu"],
+			test: true
         });
 
         recipes.push({
             title: "Pelmeņi ar sinepēm",
             ingredients: ["Pelmeņi", "Sinepes"],
-            steps: ["Uzvāri pelmeņus", "Pievieno sinepes", "Labu apetīti!"]
+            steps: ["Uzvāri pelmeņus", "Pievieno sinepes", "Labu apetīti!"],
+			test: true
         });
 
         saveRecipesToStorage(recipes);

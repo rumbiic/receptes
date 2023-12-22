@@ -393,7 +393,7 @@
                 resultDiv.innerHTML += `<p style="text-align: center;"><strong>Pagatavošanas soļi:</strong></p>`;
                 for (let i = 0; i < recipe.steps.length; i++) {
                     const step = recipe.steps[i];
-                    resultDiv.innerHTML += `<div div class="list_checkbox"><input type="checkbox" class="step-checkbox" onchange="toggleStrikethrough(this)"> ${i + 1}. ${step}</div>`;
+                    resultDiv.innerHTML += `<div div class="list_checkbox"><input type="checkbox" class="step-checkbox" onchange="toggleStrikethrough(this)"> ${step}</div>`;
                 }
             }
         }

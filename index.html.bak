@@ -183,8 +183,8 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-		
-		fetch('https://raw.githubusercontent.com/rumbiic/receptes/main/recipes.json')
+            // Fetch recipes from JSON file
+            fetch('https://raw.githubusercontent.com/rumbiic/receptes/main/recipes.json')
                 .then(response => response.json())
                 .then(data => {
                     recipes = data;
@@ -551,23 +551,6 @@
             saveRecipesToStorage(recipes);
             displayRecipeList();
         }
-
-        // Adding test recipes
-        recipes.push({
-            title: "Rīsi ar olām",
-            ingredients: ["Rīsi", "Olas", "Panna"],
-            ingredientsQuantities: ["200g", "2", "1 šķīvis"],
-            steps: ["Uzvāri rīsus", "Liec pannā", "Pievieno olas un sacep visu"],
-            test: true
-        });
-
-        recipes.push({
-            title: "Pelmeņi ar sinepēm",
-            ingredients: ["Pelmeņi", "Sinepes"],
-            ingredientsQuantities: ["500g", "1 ēd.k.", null],
-            steps: ["Uzvāri pelmeņus", "Pievieno sinepes", "Labu apetīti!"],
-            test: true
-        });
 
         saveRecipesToStorage(recipes);
         displayRecipeList();

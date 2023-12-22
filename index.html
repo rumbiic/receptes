@@ -191,6 +191,7 @@
                     displayRecipeList();
                 })
                 .catch(error => console.error('Kļūda, ielādējot receptes:', error));
+
             const inputs = document.querySelectorAll('.awesomplete');
             inputs.forEach(input => {
                 const awesomplete = new Awesomplete(input, {
@@ -206,42 +207,43 @@
 
             // Display the initial recipe list
             displayRecipeList();
-			
-			// Add 3 ingredient rows
-    for (let i = 0; i < 2; i++) {
-        addRow('ingredients-table');
-    }
 
-    // Add 3 step rows
-    for (let i = 0; i < 2; i++) {
-        addRow('steps-list');
-    }
+            // Add 3 ingredient rows
+            for (let i = 0; i < 2; i++) {
+                addRow('ingredients-table');
+            }
+
+            // Add 3 step rows
+            for (let i = 0; i < 2; i++) {
+                addRow('steps-list');
+            }
         });
 
         function updateAwesompleteList(awesomplete) {
             awesomplete.list = getUniqueIngredients();
         }
-		const existingIngredientInputs = document.querySelectorAll('.ingredient-input.awesomplete');
-    existingIngredientInputs.forEach(input => {
-        const awesomplete = new Awesomplete(input, {
-            minChars: 1,
-            list: []
+
+        const existingIngredientInputs = document.querySelectorAll('.ingredient-input.awesomplete');
+        existingIngredientInputs.forEach(input => {
+            const awesomplete = new Awesomplete(input, {
+                minChars: 1,
+                list: []
+            });
+            updateAwesompleteList(awesomplete);
         });
-        updateAwesompleteList(awesomplete);
-    });
-	
-		const recipeListTable = document.getElementById("recipe-list-table");
-    if (recipeListTable) {
-        recipeListTable.addEventListener("click", function (event) {
-            const target = event.target;
-            if (target.tagName === "SPAN" && target.classList.contains("recipe-title")) {
-                const recipeIndex = parseInt(target.getAttribute("data-index"));
-                const selectedRecipe = recipes[recipeIndex];
-                showRecipeDetails(selectedRecipe);
-            }
-        });
-    }
-		
+
+        const recipeListTable = document.getElementById("recipe-list-table");
+        if (recipeListTable) {
+            recipeListTable.addEventListener("click", function (event) {
+                const target = event.target;
+                if (target.tagName === "SPAN" && target.classList.contains("recipe-title")) {
+                    const recipeIndex = parseInt(target.getAttribute("data-index"));
+                    const selectedRecipe = recipes[recipeIndex];
+                    showRecipeDetails(selectedRecipe);
+                }
+            });
+        }
+
         const recipesKey = 'prusu_recipes';
 
         function getUniqueIngredients() {
@@ -310,44 +312,44 @@
         }
 
         function addRow(tableId) {
-    const table = document.getElementById(tableId);
+            const table = document.getElementById(tableId);
 
-    if (table) {
-        if (tableId === 'ingredients-table') {
-            const newRow = table.insertRow();
-            const cell1 = newRow.insertCell(0);
-            const cell2 = newRow.insertCell(1);
+            if (table) {
+                if (tableId === 'ingredients-table') {
+                    const newRow = table.insertRow();
+                    const cell1 = newRow.insertCell(0);
+                    const cell2 = newRow.insertCell(1);
 
-            const inputIngredient = document.createElement("input");
-            inputIngredient.type = "text";
-            inputIngredient.classList.add("ingredient-input", "awesomplete");
-            inputIngredient.placeholder = "Sastāvdaļa";
+                    const inputIngredient = document.createElement("input");
+                    inputIngredient.type = "text";
+                    inputIngredient.classList.add("ingredient-input", "awesomplete");
+                    inputIngredient.placeholder = "Sastāvdaļa";
 
-            const inputQuantity = document.createElement("input");
-            inputQuantity.type = "text";
-            inputQuantity.classList.add("quantity-input");
-            inputQuantity.placeholder = "Daudzums";
+                    const inputQuantity = document.createElement("input");
+                    inputQuantity.type = "text";
+                    inputQuantity.classList.add("quantity-input");
+                    inputQuantity.placeholder = "Daudzums";
 
-            cell1.appendChild(inputIngredient);
-            cell2.appendChild(inputQuantity);
+                    cell1.appendChild(inputIngredient);
+                    cell2.appendChild(inputQuantity);
 
-            const removeButton = document.createElement("span");
-            removeButton.textContent = "❌";
-            removeButton.classList.add("remove-button");
-            removeButton.onclick = function () {
-                removeRow(tableId, newRow.rowIndex);
-            };
+                    const removeButton = document.createElement("span");
+                    removeButton.textContent = "❌";
+                    removeButton.classList.add("remove-button");
+                    removeButton.onclick = function () {
+                        removeRow(tableId, newRow.rowIndex);
+                    };
 
-            newRow.appendChild(removeButton);
+                    newRow.appendChild(removeButton);
 
-            // Initialize Awesomplete for the new ingredient input field
-            const awesomplete = new Awesomplete(inputIngredient, {
-                minChars: 1,
-                list: []
-            });
+                    // Initialize Awesomplete for the new ingredient input field
+                    const awesomplete = new Awesomplete(inputIngredient, {
+                        minChars: 1,
+                        list: []
+                    });
 
-            // Update the Awesomplete list
-            updateAwesompleteList(awesomplete);
+                    // Update the Awesomplete list
+                    updateAwesompleteList(awesomplete);
                 } else if (tableId === 'steps-list') {
                     const tbody = table.querySelector("tbody");
 
@@ -421,34 +423,34 @@
                 }
             }
         }
-		
-		function getRandomRecipe() {
+
+        function getRandomRecipe() {
             // Retrieve a random recipe from the list
             const randomIndex = Math.floor(Math.random() * recipes.length);
             return recipes[randomIndex];
         }
 
         function showRecipeDetails(recipe) {
-    const resultDiv = document.getElementById("result");
+            const resultDiv = document.getElementById("result");
 
-    if (resultDiv) {
-        resultDiv.innerHTML = `<p style="text-align: center; font-weight: bold;">${recipe.title}</p>`;
+            if (resultDiv) {
+                resultDiv.innerHTML = `<p style="text-align: center; font-weight: bold;">${recipe.title}</p>`;
 
-        // Display ingredients
-        resultDiv.innerHTML += `<p style="text-align: center;"><strong>Sastāvdaļas:</strong></p>`;
-        for (let i = 0; i < recipe.ingredients.length; i++) {
-            const ingredient = recipe.ingredients[i];
-            resultDiv.innerHTML += `<div class="list_checkbox"><input type="checkbox" class="ingredient-checkbox" onchange="toggleStrikethrough(this)"> ${ingredient.name}${ingredient.quantity ? `, ${ingredient.quantity}` : ''}</div>`;
+                // Display ingredients
+                resultDiv.innerHTML += `<p style="text-align: center;"><strong>Sastāvdaļas:</strong></p>`;
+                for (let i = 0; i < recipe.ingredients.length; i++) {
+                    const ingredient = recipe.ingredients[i];
+                    resultDiv.innerHTML += `<div class="list_checkbox"><input type="checkbox" class="ingredient-checkbox" onchange="toggleStrikethrough(this)"> ${ingredient.name}${ingredient.quantity ? `, ${ingredient.quantity}` : ''}</div>`;
+                }
+
+                // Display steps
+                resultDiv.innerHTML += `<p style="text-align: center;"><strong>Pagatavošanas soļi:</strong></p>`;
+                for (let i = 0; i < recipe.steps.length; i++) {
+                    const step = recipe.steps[i];
+                    resultDiv.innerHTML += `<div div class="list_checkbox"><input type="checkbox" class="step-checkbox" onchange="toggleStrikethrough(this)"> ${step}</div>`;
+                }
+            }
         }
-
-        // Display steps
-        resultDiv.innerHTML += `<p style="text-align: center;"><strong>Pagatavošanas soļi:</strong></p>`;
-        for (let i = 0; i < recipe.steps.length; i++) {
-            const step = recipe.steps[i];
-            resultDiv.innerHTML += `<div div class="list_checkbox"><input type="checkbox" class="step-checkbox" onchange="toggleStrikethrough(this)"> ${step}</div>`;
-        }
-    }
-}
 
         function addRecipe(event) {
             event.preventDefault();

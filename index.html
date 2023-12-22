@@ -215,16 +215,16 @@
         }
 
 		const recipeListTable = document.getElementById("recipe-list-table");
-        if (recipeListTable) {
-            recipeListTable.addEventListener("click", function (event) {
-                const target = event.target;
-                if (target.tagName === "SPAN" && target.classList.contains("recipe-title")) {
-                    const recipeIndex = parseInt(target.getAttribute("data-index"));
-                    const selectedRecipe = recipes[recipeIndex];
-                    showRecipeDetails(selectedRecipe);
-                }
-            });
-        }
+    if (recipeListTable) {
+        recipeListTable.addEventListener("click", function (event) {
+            const target = event.target;
+            if (target.tagName === "SPAN" && target.classList.contains("recipe-title")) {
+                const recipeIndex = parseInt(target.getAttribute("data-index"));
+                const selectedRecipe = recipes[recipeIndex];
+                showRecipeDetails(selectedRecipe);
+            }
+        });
+    }
 		
         const recipesKey = 'prusu_recipes';
 
@@ -601,8 +601,8 @@
             <div class="recipe-list-section">
                 <h2>Recepšu saraksts</h2>
                 <table id="recipe-list-table">
-        <!-- Table content will be dynamically added here -->
-    </table>
+					<!-- Table content will be dynamically added here -->
+				</table>
             </div>
         </div>
     </div>

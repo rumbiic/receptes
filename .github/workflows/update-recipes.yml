@@ -28,11 +28,11 @@ jobs:
           echo '{"recipes": []}' > recipes.json  # Resetting the file
           
           # Add the new recipes to the file
-          cat tmp_recipes.json | jq '.recipes += inputs.recipes' > recipes.json
+          cat tmp_recipes.json | jq '.recipes += '"$(cat tmp_recipes.json)" > recipes.json
           
           # Remove temporary file
           rm tmp_recipes.json
           
           git add recipes.json
           git commit -m "Update recipes.json" || true
-          git push https://${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }} --follow-tags -o "input_recipes=${{ toJson(inputs.recipes) }}"
+          git push https://${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }} --follow-tags

@@ -31,9 +31,19 @@ function generateRecipe() {
 function addRecipe(event) {
     event.preventDefault();
 
-    const newTitle = document.getElementById("new-title").value;
-    const newIngredients = document.getElementById("new-ingredients").value.split(',').map(i => i.trim());
-    const newSteps = document.getElementById("new-steps").value.split(',').map(s => s.trim());
+    const newTitleElement = document.getElementById("new-title");
+    const newIngredientsElement = document.getElementById("new-ingredients");
+    const newStepsElement = document.getElementById("new-steps");
+
+    // Validate inputs
+    if (!newTitleElement || !newIngredientsElement || !newStepsElement) {
+        alert("Aizpildi visus laukus");
+        return;
+    }
+
+    const newTitle = newTitleElement.value;
+    const newIngredients = newIngredientsElement.value.split(',').map(i => i.trim());
+    const newSteps = newStepsElement.value.split(',').map(s => s.trim());
 
     // Validate inputs
     if (!newTitle || newIngredients.length === 0 || newSteps.length === 0) {
@@ -49,9 +59,12 @@ function addRecipe(event) {
     });
 
     // Clear the form inputs
-    document.getElementById("new-title").value = '';
-    document.getElementById("new-ingredients").value = '';
-    document.getElementById("new-steps").value = '';
+    newTitleElement.value = '';
+    newIngredientsElement.value = '';
+    newStepsElement.value = '';
+
+    // Display the updated recipe list
+    displayRecipeList();
 
     alert("Recepte veiksmīgi pievienota!");
 }

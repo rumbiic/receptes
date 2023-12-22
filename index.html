@@ -58,20 +58,45 @@ function toggleStrikethrough(index) {
 }
 
         function addRecipe(event) {
-            event.preventDefault();
+    event.preventDefault();
 
-            // Add debugging statements to identify the issue
-            const newTitleElement = document.getElementById("new-title");
-            console.log("newTitleElement:", newTitleElement);
+    const newTitleElement = document.getElementById("new-title");
+    const newIngredientsElement = document.getElementById("new-ingredients");
+    const newStepsElement = document.getElementById("new-steps");
 
-            const newIngredientsElement = document.getElementById("new-ingredients");
-            console.log("newIngredientsElement:", newIngredientsElement);
+    // Validate inputs
+    if (!newTitleElement || !newIngredientsElement || !newStepsElement) {
+        alert("Aizpildi visus laukus");
+        return;
+    }
 
-            const newStepsElement = document.getElementById("new-steps");
-            console.log("newStepsElement:", newStepsElement);
+    const newTitle = newTitleElement.value;
+    const newIngredients = newIngredientsElement.value.split(',').map(i => i.trim());
+    const newSteps = newStepsElement.value.split(',').map(s => s.trim());
 
-            // Rest of the code...
-        }
+    // Validate inputs
+    if (!newTitle || newIngredients.length === 0 || newSteps.length === 0) {
+        alert("Aizpildi visus laukus");
+        return;
+    }
+
+    // Add the new recipe to the recipes array
+    recipes.push({
+        title: newTitle,
+        ingredients: newIngredients,
+        steps: newSteps
+    });
+
+    // Clear the form inputs
+    newTitleElement.value = '';
+    newIngredientsElement.value = '';
+    newStepsElement.value = '';
+
+    // Display the updated recipe list
+    displayRecipeList();
+
+    alert("Recepte veiksmīgi pievienota!");
+}
 
         function addRow(tableId) {
             const table = document.getElementById(tableId);
@@ -116,14 +141,12 @@ function toggleStrikethrough(index) {
         }
 
         .randomizer-section,
-        .recipe-input-section,
-        .recipe-list-section {
-            width: 100%; /* Adjusted to full width for better visibility */
-            background-color: #fff;
-            padding: 20px;
-            box-sizing: border-box;
-            margin-bottom: 20px; /* Added space between sections */
-        }
+.recipe-input-section {
+    width: 48%; /* 48% to leave some space between sections */
+    background-color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+}
 
         h1, h2, h3 {
             text-align: center;

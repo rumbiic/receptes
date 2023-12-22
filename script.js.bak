@@ -58,15 +58,18 @@ function addRecipe(event) {
 
 function addRow(tableId) {
     const table = document.getElementById(tableId);
-    const newRow = table.insertRow(-1);
 
-    if (tableId === 'ingredients-table') {
-        const cell1 = newRow.insertCell(0);
-        const cell2 = newRow.insertCell(1);
-        cell1.innerHTML = '<input type="text" class="ingredient-input" placeholder="Sastāvdaļa">';
-        cell2.innerHTML = '<input type="text" class="quantity-input" placeholder="Daudzums">';
-    } else if (tableId === 'steps-list') {
-        const cell = newRow.insertCell(0);
-        cell.innerHTML = `<input type="text" class="step-input" placeholder="Soļa apraksts">`;
+    if (table) {
+        const newRow = table.insertRow(-1);
+
+        if (tableId === 'ingredients-table') {
+            const cell1 = newRow.insertCell(0);
+            const cell2 = newRow.insertCell(1);
+            cell1.innerHTML = '<input type="text" class="ingredient-input" placeholder="Sastāvdaļa">';
+            cell2.innerHTML = '<input type="text" class="quantity-input" placeholder="Daudzums">';
+        } else if (tableId === 'steps-list') {
+            const cell = newRow.insertCell(0);
+            cell.innerHTML = `<input type="text" class="step-input" placeholder="Soļa apraksts">`;
+        }
     }
 }

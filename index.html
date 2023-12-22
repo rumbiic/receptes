@@ -85,13 +85,17 @@
         }
 
         .recipe-list-ul {
-            list-style-type: none;
-            padding: 0;
-        }
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
 
-        .recipe-list-ul li {
-            margin-bottom: 10px;
-        }
+.recipe-list-ul li {
+    margin-bottom: 10px;
+    flex: 1 1 calc(50% - 20px);
+    padding: 10px;
+}
 		
 		.remove-button {
             display: inline-block;
@@ -157,7 +161,7 @@
         const rowsPerColumn = 10;
 
         // Create new list items
-        for (let i = 0; i < Math.ceil(sortedRecipes.length / rowsPerColumn); i++) {
+        for (let i = 0; i < Math.ceil(sortedRecipes.length / 2 / rowsPerColumn); i++) {
             const listItem = document.createElement("li");
             listItem.style.display = "flex";
             listItem.style.justifyContent = "space-between";
@@ -197,6 +201,7 @@
         }
     }
 }
+
 
         function addRow(tableId) {
     const table = document.getElementById(tableId);

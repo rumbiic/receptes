@@ -97,16 +97,22 @@
         button:hover {
             background-color: #45a049;
         }
+		
+		.ingredient-input {
+            width: 60%;
+            margin-right: 10%;
+            box-sizing: border-box;
+        }
 
         .step-input {
-            width: 100%;
-            padding: 10px;
+            width: 90%;
+            margin-right: 10%;
             box-sizing: border-box;
         }
 
         .quantity-input {
-            width: 100%;
-            padding: 10px;
+            width: 30%;
+            margin-right: 10%;
             box-sizing: border-box;
         }
 
@@ -141,9 +147,8 @@
         }
 
         .remove-button {
-            display: inline-block;
-            margin-left: 10px;
-            cursor: pointer;
+            width: 10%;
+			box-sizing: border-box;
         }
 
         .list_checkbox {
@@ -527,8 +532,7 @@
             <div class="recipe-input-section">
                 <h2>Pievienot jaunu recepti</h2>
                 <form onsubmit="addRecipe(event)">
-                    <label for="new-title">Nosaukums:</label>
-                    <input type="text" id="new-title" style="width: 100%;" required>
+                    <input type="text" placeholder="Nosaukums" id="new-title" style="width: 100%;" required>
 
                     <div id="ingredients-section">
                         <h3>Sastāvdaļas:</h3>

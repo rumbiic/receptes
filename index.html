@@ -65,7 +65,6 @@
 
         table {
             width: 100%;
-            margin-bottom: 10px;
         }
 
         td {
@@ -105,8 +104,8 @@
         }
 
         .step-input {
-            width: 90%;
-            margin-right: 10%;
+            width: 87%;
+            margin-right: 3%;
             box-sizing: border-box;
         }
 
@@ -149,6 +148,7 @@
         .remove-button {
             width: 10%;
 			box-sizing: border-box;
+			cursor: pointer;
         }
 
         .list_checkbox {
@@ -532,8 +532,7 @@
             <div class="recipe-input-section">
                 <h2>Pievienot jaunu recepti</h2>
                 <form onsubmit="addRecipe(event)">
-                    <label for="new-title">Nosaukums:</label>
-                    <input type="text" id="new-title" style="width: 100%;" required>
+                    <input type="text" placeholder="Nosaukums" id="new-title" style="width: 100%;" required>
 
                     <div id="ingredients-section">
                         <h3>Sastāvdaļas:</h3>

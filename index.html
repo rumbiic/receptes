@@ -171,12 +171,12 @@
             background-color: #2980b9;
         }
 		
-		#ingredients-table td {
-			border: 1px solid #ddd;
-			text-align: left;
-			position: relative;
-			width: 50%;
-			padding: 10px;
+		#ingredients-table td.ingr {
+			width: 70%;
+			box-sizing: border-box;
+		}
+		#ingredients-table td.qty {
+			width: 20%;
 			box-sizing: border-box;
 		}
     </style>
@@ -577,8 +577,8 @@
                         <h3>Sastāvdaļas:</h3>
                         <table id="ingredients-table">
                             <tr>
-                                <td><input type="text" class="ingredient-input awesomplete" placeholder="Sastāvdaļa"></td>
-                                <td><input type="text" class="quantity-input" placeholder="Daudzums"></td>
+                                <td class="ingr"><input type="text" class="ingredient-input awesomplete" placeholder="Sastāvdaļa"></td>
+                                <td class="qty"><input type="text" class="quantity-input" placeholder="Daudzums"></td>
                             </tr>
                         </table>
                         <button type="button" class="add-button" onclick="addRow('ingredients-table')">Jauna rinda</button>

@@ -17,22 +17,24 @@ jobs:
 
       - name: Update recipes.json
         run: |
-          git config user.email "actions@github.com"
-          git config user.name "GitHub Actions"
-          
-          # Fetch the latest recipes.json from the repository
-          git pull origin main
-          
-          # Modify the recipes.json file by appending the new recipes
-          cat recipes.json > tmp_recipes.json
-          echo '{"recipes": []}' > recipes.json  # Resetting the file
-          
-          # Add the new recipes to the file
-          cat tmp_recipes.json | jq '.recipes += '"$(cat tmp_recipes.json)" > recipes.json
-          
-          # Remove temporary file
-          rm tmp_recipes.json
-          
-          git add recipes.json
-          git commit -m "Update recipes.json" || true
-          git push https://${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }} --follow-tags
+            git config user.email "actions@github.com"
+            git config user.name "GitHub Actions"
+
+            # Fetch the latest recipes.json from the repository
+            git pull origin main
+
+            # Modify the recipes.json file by appending the new recipes
+            cat recipes.json > tmp_recipes.json
+            echo '{"recipes": []}' > recipes.json  # Resetting the file
+
+            # Add the new recipes to the file
+            jq -s '.[0].recipes += .[1].recipes' tmp_recipes.json recipes.json > tmp_recipes_updated.json
+            mv tmp_recipes_updated.json recipes.json
+
+            # Remove temporary file
+            rm tmp_recipes.json
+
+            git add recipes.json
+            git commit -m "Update recipes.json" || true
+            git push https://***@github.com/rumbiic/receptes.git HEAD:refs/heads/main --follow-tags
+        shell: bash

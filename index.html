@@ -314,14 +314,21 @@
 function showRecipeDetails(recipe, resultDiv) {
     if (resultDiv) {
         resultDiv.innerHTML = `<p style="text-align: center; font-weight: bold;">[${recipe.title}]</p>`;
+        
+        // Display ingredients
         resultDiv.innerHTML += `<p style="text-align: center;"><strong>Sastāvdaļas:</strong></p>`;
-        recipe.ingredients.forEach((ingredient, index) => {
-            resultDiv.innerHTML += `<div style="padding-bottom: 5px;"><input type="checkbox" class="ingredient-checkbox" onchange="toggleStrikethrough(this)"> ${ingredient}${recipe.ingredientsQuantities[index] ? `, qty ${recipe.ingredientsQuantities[index]}` : ''}</div>`;
-        });
+        for (let i = 0; i < recipe.ingredients.length; i++) {
+            const ingredient = recipe.ingredients[i];
+            const quantity = recipe.ingredientsQuantities[i];
+            resultDiv.innerHTML += `<div style="padding-bottom: 5px;"><input type="checkbox" class="ingredient-checkbox" onchange="toggleStrikethrough(this)"> ${ingredient}${quantity ? `, qty ${quantity}` : ''}</div>`;
+        }
+
+        // Display steps
         resultDiv.innerHTML += `<p style="text-align: center;"><strong>Pagatavošanas soļi:</strong></p>`;
-        recipe.steps.forEach((step, index) => {
-            resultDiv.innerHTML += `<div style="padding-bottom: 5px;"><input type="checkbox" class="step-checkbox" onchange="toggleStrikethrough(this)"> ${index + 1}. ${step}</div>`;
-        });
+        for (let i = 0; i < recipe.steps.length; i++) {
+            const step = recipe.steps[i];
+            resultDiv.innerHTML += `<div style="padding-bottom: 5px;"><input type="checkbox" class="step-checkbox" onchange="toggleStrikethrough(this)"> ${i + 1}. ${step}</div>`;
+        }
     }
 }
 

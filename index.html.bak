@@ -36,8 +36,16 @@
 
         .randomizer-section,
         .recipe-input-section,
-        .recipe-list-section {
-            width: 100%; /* Set the width to 100% for each section */
+        {
+            width: 48%%; /* Set the width to 100% for each section */
+            background-color: #fff;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+		.recipe-list-section,
+        {
+            width: 48%%; /* Set the width to 100% for each section */
             background-color: #fff;
             padding: 20px;
             box-sizing: border-box;
@@ -124,37 +132,40 @@
         }
 
         function addRow(tableId) {
-            const table = document.getElementById(tableId);
+    const table = document.getElementById(tableId);
 
-            if (table) {
-                const newRow = table.insertRow();
-                const cell = newRow.insertCell(0);
+    if (table) {
+        if (tableId === 'ingredients-table') {
+            const newRow = table.insertRow();
+            const cell = newRow.insertCell(0);
 
-                if (tableId === 'ingredients-table') {
-                    const inputIngredient = document.createElement("input");
-                    inputIngredient.type = "text";
-                    inputIngredient.classList.add("ingredient-input", "awesomplete");
-                    inputIngredient.placeholder = "Sastāvdaļa";
+            const inputIngredient = document.createElement("input");
+            inputIngredient.type = "text";
+            inputIngredient.classList.add("ingredient-input", "awesomplete");
+            inputIngredient.placeholder = "Sastāvdaļa";
 
-                    const inputQuantity = document.createElement("input");
-                    inputQuantity.type = "text";
-                    inputQuantity.classList.add("quantity-input");
-                    inputQuantity.placeholder = "Daudzums";
+            const inputQuantity = document.createElement("input");
+            inputQuantity.type = "text";
+            inputQuantity.classList.add("quantity-input");
+            inputQuantity.placeholder = "Daudzums";
 
-                    cell.appendChild(inputIngredient);
-                    cell.appendChild(document.createElement("br"));
-                    cell.appendChild(document.createTextNode("Daudzums: "));
-                    cell.appendChild(inputQuantity);
-                } else if (tableId === 'steps-list') {
-                    const inputStep = document.createElement("input");
-                    inputStep.type = "text";
-                    inputStep.classList.add("step-input");
-                    inputStep.placeholder = "Soļa apraksts";
+            cell.appendChild(inputIngredient);
+            cell.appendChild(document.createElement("br"));
+            cell.appendChild(document.createTextNode("Daudzums: "));
+            cell.appendChild(inputQuantity);
+        } else if (tableId === 'steps-list') {
+            const ol = table.querySelector("ol");
+            const li = document.createElement("li");
+            const inputStep = document.createElement("input");
+            inputStep.type = "text";
+            inputStep.classList.add("step-input");
+            inputStep.placeholder = "Soļa apraksts";
 
-                    cell.appendChild(inputStep);
-                }
-            }
+            li.appendChild(inputStep);
+            ol.appendChild(li);
         }
+    }
+}
 
         function removeRow(tableId) {
             const table = document.getElementById(tableId);

@@ -316,12 +316,12 @@ function showRecipeDetails(recipe) {
 
     if (resultDiv) {
         resultDiv.innerHTML = `<p style="text-align: center; font-weight: bold;">${recipe.title}</p>`;
-        
+
         // Display ingredients
         resultDiv.innerHTML += `<p style="text-align: center;"><strong>Sastāvdaļas:</strong></p>`;
         for (let i = 0; i < recipe.ingredients.length; i++) {
             const ingredient = recipe.ingredients[i];
-            const quantity = recipe.ingredientsQuantities[i];
+            const quantity = recipe.ingredientsQuantities ? recipe.ingredientsQuantities[i] : null;
             resultDiv.innerHTML += `<div style="padding-bottom: 5px;"><input type="checkbox" class="ingredient-checkbox" onchange="toggleStrikethrough(this)"> ${i + 1}. ${ingredient}${quantity ? `, quantity ${quantity}` : ''}</div>`;
         }
 
@@ -333,6 +333,7 @@ function showRecipeDetails(recipe) {
         }
     }
 }
+
 
 
         function addRecipe(event) {

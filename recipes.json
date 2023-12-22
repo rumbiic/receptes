@@ -1,1 +1,9 @@
-{"recipes": []}
+[
+  {
+    "title": "Your Recipe Title",
+    "ingredients": ["Ingredient 1", "Ingredient 2"],
+    "ingredientsQuantities": ["Quantity 1", "Quantity 2"],
+    "steps": ["Step 1", "Step 2"]
+  },
+  // Add more recipe objects as needed
+]

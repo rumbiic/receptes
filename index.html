@@ -311,7 +311,9 @@
     }
 }
 
-function showRecipeDetails(recipe, resultDiv) {
+function showRecipeDetails(recipe) {
+    const resultDiv = document.getElementById("result");
+
     if (resultDiv) {
         resultDiv.innerHTML = `<p style="text-align: center; font-weight: bold;">${recipe.title}</p>`;
         
@@ -331,6 +333,7 @@ function showRecipeDetails(recipe, resultDiv) {
         }
     }
 }
+
 
         function addRecipe(event) {
     event.preventDefault();

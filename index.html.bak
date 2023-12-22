@@ -142,19 +142,36 @@
     if (recipeListUl) {
         // Clear existing list items
         recipeListUl.innerHTML = "";
-        
+
         // Create new list items
         recipes.forEach((recipe, index) => {
             const listItem = document.createElement("li");
-            listItem.textContent = recipe.title;
+            
+            // Create a container div to hold the recipe title and delete button
+            const recipeContainer = document.createElement("div");
+            recipeContainer.style.display = "flex";
+            recipeContainer.style.justifyContent = "space-between";
+            recipeContainer.style.alignItems = "center";
 
-            const deleteButton = document.createElement("button");
-            deleteButton.textContent = "Dzēst";
+            // Create a span for the recipe title
+            const titleSpan = document.createElement("span");
+            titleSpan.textContent = recipe.title;
+
+            // Create the delete button (X)
+            const deleteButton = document.createElement("span");
+            deleteButton.textContent = "❌";
+            deleteButton.classList.add("remove-button");
             deleteButton.onclick = function () {
                 deleteRecipe(index);
             };
 
-            listItem.appendChild(deleteButton);
+            // Append the title and delete button to the container
+            recipeContainer.appendChild(titleSpan);
+            recipeContainer.appendChild(deleteButton);
+
+            // Append the container to the list item
+            listItem.appendChild(recipeContainer);
+
             recipeListUl.appendChild(listItem);
         });
     }
@@ -253,9 +270,9 @@
             const resultDiv = document.getElementById("result");
             if (resultDiv) {
                 resultDiv.innerHTML = `<p style="text-align: center; font-weight: bold;">${recipe.title}</p>`;
-                resultDiv.innerHTML += `<p><strong>Ingredients:</strong></p>`;
+                resultDiv.innerHTML += `<p><strong>Sastāvdaļas:</strong></p>`;
                 resultDiv.innerHTML += `<ul>${recipe.ingredients.map(ingredient => `<li><input type="checkbox" onchange="toggleStrikethrough(this)">${ingredient}</li>`).join('')}</ul>`;
-                resultDiv.innerHTML += `<p><strong>Steps:</strong></p>`;
+                resultDiv.innerHTML += `<p><strong>Pagatavošanas soļi:</strong></p>`;
                 resultDiv.innerHTML += `<ol>${recipe.steps.map(step => `<li><input type="checkbox" onchange="toggleStrikethrough(this)">${step}</li>`).join('')}</ol>`;
             }
         }
@@ -401,7 +418,7 @@
                     </div>
 
                     <div id="steps-section">
-                        <h3>Soļi:</h3>
+                        <h3>Pagatavošanas soļi:</h3>
                         <table id="steps-list">
 							<tr>
 								<td><input type="text" class="step-input" placeholder="Soļa apraksts"></td>

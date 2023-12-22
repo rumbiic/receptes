@@ -98,6 +98,11 @@
             margin-left: 10px;
             cursor: pointer;
         }
+		.ingredient-checkbox,
+.step-checkbox {
+    transform: scale(1.5);
+    margin-right: 8px;
+}
     </style>
 
     <script>
@@ -267,15 +272,15 @@
         }
 
         function showRecipeDetails(recipe) {
-            const resultDiv = document.getElementById("result");
-            if (resultDiv) {
-                resultDiv.innerHTML = `<p style="text-align: center; font-weight: bold;">${recipe.title}</p>`;
-                resultDiv.innerHTML += `<p><strong>Sastāvdaļas:</strong></p>`;
-                resultDiv.innerHTML += `<ul>${recipe.ingredients.map(ingredient => `<li><input type="checkbox" onchange="toggleStrikethrough(this)">${ingredient}</li>`).join('')}</ul>`;
-                resultDiv.innerHTML += `<p><strong>Pagatavošanas soļi:</strong></p>`;
-                resultDiv.innerHTML += `<ol>${recipe.steps.map(step => `<li><input type="checkbox" onchange="toggleStrikethrough(this)">${step}</li>`).join('')}</ol>`;
-            }
-        }
+    const resultDiv = document.getElementById("result");
+    if (resultDiv) {
+        resultDiv.innerHTML = `<p style="text-align: center; font-weight: bold;">${recipe.title}</p>`;
+        resultDiv.innerHTML += `<p><strong>Sastāvdaļas:</strong></p>`;
+        resultDiv.innerHTML += `<ul>${recipe.ingredients.map(ingredient => `<li><input type="checkbox" class="ingredient-checkbox" onchange="toggleStrikethrough(this)">${ingredient}</li>`).join('')}</ul>`;
+        resultDiv.innerHTML += `<p><strong>Pagatavošanas soļi:</strong></p>`;
+        resultDiv.innerHTML += `<ol>${recipe.steps.map((step, index) => `<li><input type="checkbox" class="step-checkbox" onchange="toggleStrikethrough(this)">${index + 1}. ${step}</li>`).join('')}</ol>`;
+    }
+}
 
         function addRecipe(event) {
     event.preventDefault();

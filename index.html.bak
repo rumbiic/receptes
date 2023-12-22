@@ -306,7 +306,7 @@
     if (matchingRecipes.length > 0) {
         const randomRecipe = matchingRecipes[Math.floor(Math.random() * matchingRecipes.length)];
         showRecipeDetails(randomRecipe, resultDiv);
-    } else {
+    } else { 
         resultDiv.innerHTML = `<p>Ar šīm sastāvdaļām recepšu vēl nav.</p>`;
     }
 }
@@ -423,18 +423,20 @@ function showRecipeDetails(recipe) {
         
         // Adding test recipes
         recipes.push({
-            title: "Rīsi ar olām",
-            ingredients: ["Rīsi", "Olas", "Panna"],
-            steps: ["Uzvāri rīsus", "Liec pannā", "Pievieno olas un sacep visu"],
-			test: true
-        });
+    title: "Rīsi ar olām",
+    ingredients: ["Rīsi", "Olas", "Panna"],
+    ingredientsQuantities: ["200g", "2", "1 šķīvis"],
+    steps: ["Uzvāri rīsus", "Liec pannā", "Pievieno olas un sacep visu"],
+    test: true
+});
 
-        recipes.push({
-            title: "Pelmeņi ar sinepēm",
-            ingredients: ["Pelmeņi", "Sinepes"],
-            steps: ["Uzvāri pelmeņus", "Pievieno sinepes", "Labu apetīti!"],
-			test: true
-        });
+recipes.push({
+    title: "Pelmeņi ar sinepēm",
+    ingredients: ["Pelmeņi", "Sinepes"],
+    ingredientsQuantities: ["500g", "1 ēd.k.", null],
+    steps: ["Uzvāri pelmeņus", "Pievieno sinepes", "Labu apetīti!"],
+    test: true
+});
 
         saveRecipesToStorage(recipes);
         displayRecipeList();

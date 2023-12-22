@@ -15,9 +15,22 @@ jobs:
 
       - name: Update recipes.json
         run: |
-          git config user.email "actions@github.com"
-          git config user.name "GitHub Actions"
-          echo '{"recipes": []}' > recipes.json
-          git add recipes.json
-          git commit -m "Update recipes.json" || true
-          git push https://${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }}
+        git config user.email "actions@github.com"
+        git config user.name "GitHub Actions"
+        
+        # Fetch the latest recipes.json from the repository
+        git pull origin main
+        
+        # Modify the recipes.json file by appending the new recipes
+        cat recipes.json > tmp_recipes.json
+        echo '{"recipes": []}' > recipes.json  # Resetting the file
+        
+        # Add the new recipes to the file
+        cat tmp_recipes.json | jq '.recipes += inputs.recipes' > recipes.json
+        
+        # Remove temporary file
+        rm tmp_recipes.json
+        
+        git add recipes.json
+        git commit -m "Update recipes.json" || true
+            git push https://${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.ref }} --follow-tags -o "input_recipes=${{ toJson(recipes) }}"

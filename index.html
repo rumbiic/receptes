@@ -63,7 +63,7 @@
         }
 		
 		#ingredients-table td {
-    padding: 10px 5px; /* Adjust the padding values as needed */
+    padding: 0px; /* Adjust the padding values as needed */
     text-align: left;
     position: relative; /* Relative positioning for absolute X */
 }
@@ -72,6 +72,11 @@
 			padding:0;
 		}
 
+		.ingredient-checkbox,
+.step-checkbox {
+    transform: scale(1.5);
+    margin-right: 8px;
+}
         button {
             display: block;
             margin-top: 10px;
@@ -125,11 +130,6 @@
             margin-left: 10px;
             cursor: pointer;
         }
-		.ingredient-checkbox,
-.step-checkbox {
-    transform: scale(1.5);
-    margin-right: 8px;
-}
 
 		.list_checkbox{
 			height: 40px;

@@ -335,14 +335,14 @@
                 for (let i = 0; i < recipe.ingredients.length; i++) {
                     const ingredient = recipe.ingredients[i];
                     const quantity = recipe.ingredientsQuantities ? recipe.ingredientsQuantities[i] : null;
-                    resultDiv.innerHTML += `<div style="padding-bottom: 5px;"><input type="checkbox" class="ingredient-checkbox" onchange="toggleStrikethrough(this)"> ${i + 1}. ${ingredient}${quantity ? `, ${quantity}` : ''}</div>`;
+                    resultDiv.innerHTML += `<div class="list_checkbox"><input type="checkbox" class="ingredient-checkbox" onchange="toggleStrikethrough(this)"> ${i + 1}. ${ingredient}${quantity ? `, ${quantity}` : ''}</div>`;
                 }
 
                 // Display steps
                 resultDiv.innerHTML += `<p style="text-align: center;"><strong>Pagatavošanas soļi:</strong></p>`;
                 for (let i = 0; i < recipe.steps.length; i++) {
                     const step = recipe.steps[i];
-                    resultDiv.innerHTML += `<div style="padding-bottom: 5px;"><input type="checkbox" class="step-checkbox" onchange="toggleStrikethrough(this)"> ${i + 1}. ${step}</div>`;
+                    resultDiv.innerHTML += `<div div class="list_checkbox"><input type="checkbox" class="step-checkbox" onchange="toggleStrikethrough(this)"> ${i + 1}. ${step}</div>`;
                 }
             }
         }

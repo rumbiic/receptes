@@ -154,36 +154,31 @@
         // Clear existing table content
         recipeListTable.innerHTML = "";
 
-        // Sort recipes alphabetically
-        const sortedRecipes = recipes.slice().sort((a, b) => a.title.localeCompare(b.title));
-
-        // Determine the number of rows per column
-        const rowsPerColumn = 15;
-
-        // Calculate the number of columns needed
-        const numColumns = Math.ceil(sortedRecipes.length / rowsPerColumn);
-
         // Create the table structure
-        for (let i = 0; i < rowsPerColumn; i++) {
+        const numRows = 15;
+        const numCols = 2;
+
+        for (let i = 0; i < numRows; i++) {
             const row = recipeListTable.insertRow();
-            for (let j = 0; j < numColumns; j++) {
+            for (let j = 0; j < numCols; j++) {
                 const cell = row.insertCell();
                 cell.innerHTML = "&nbsp;"; // Add a non-breaking space to ensure the cell is not collapsed
             }
         }
 
-        // Populate the table with recipe data
+        // Now, populate the table with recipe data (similar to the previous code)
+        const sortedRecipes = recipes.slice().sort((a, b) => a.title.localeCompare(b.title));
+
         for (let i = 0; i < sortedRecipes.length; i++) {
             const recipe = sortedRecipes[i];
-            const rowIdx = i % rowsPerColumn;
-            const colIdx = Math.floor(i / rowsPerColumn);
+            const rowIdx = i % numRows;
+            const colIdx = Math.floor(i / numRows);
 
             const cell = recipeListTable.rows[rowIdx].cells[colIdx];
             cell.innerHTML = `<span>${recipe.title}</span> <span class="remove-button" onclick="deleteRecipe(${i})">❌</span>`;
         }
     }
 }
-
 
 
         function addRow(tableId) {
@@ -457,9 +452,9 @@
 
             <div class="recipe-list-section">
                 <h2>Recepšu saraksts</h2>
-                <ul id="recipe-list-ul" class="recipe-list-ul">
-                    <!-- Recipes will be dynamically added here -->
-                </ul>
+                <table id="recipe-list-table">
+        <!-- Table content will be dynamically added here -->
+    </table>
             </div>
         </div>
     </div>

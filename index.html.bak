@@ -65,6 +65,7 @@
     padding: 0px; /* Adjust the padding values as needed */
     text-align: left;
     position: relative; /* Relative positioning for absolute X */
+	margin: auto;
 }
 		
 		td {
@@ -113,6 +114,7 @@
     border: 1px solid #ddd; /* Add borders to cells */
     text-align: left;
     position: relative; /* Relative positioning for absolute X */
+	width: 50%; /* Equal width for both columns */
 }
 
 #recipe-list-table td span.remove-button {

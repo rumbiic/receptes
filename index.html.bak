@@ -119,6 +119,54 @@
             }
         }
 
+        // Function to add a new row to the specified table
+        function addRow(tableId) {
+            const table = document.getElementById(tableId);
+
+            if (table) {
+                const newRow = table.insertRow(-1);
+
+                if (tableId === 'ingredients-table') {
+                    const cell1 = newRow.insertCell(0);
+                    const cell2 = newRow.insertCell(1);
+                    cell1.innerHTML = '<input type="text" class="ingredient-input awesomplete" placeholder="Sastāvdaļa">';
+                    cell2.innerHTML = '<input type="text" class="quantity-input" placeholder="Daudzums">';
+                } else if (tableId === 'steps-list') {
+                    const cell = newRow.insertCell(0);
+                    cell.innerHTML = `<input type="text" class="step-input" placeholder="Soļa apraksts">`;
+                }
+            }
+        }
+
+        // Function to generate a random recipe based on ingredients
+        function generateRecipe() {
+            const ingredient1 = document.getElementById("ingredient1").value;
+            const ingredient2 = document.getElementById("ingredient2").value;
+            const ingredient3 = document.getElementById("ingredient3").value;
+
+            const matchingRecipes = recipes.filter(recipe => {
+                const ingredients = recipe.ingredients.map(ingredient => ingredient.toLowerCase());
+                return ingredients.includes(ingredient1.toLowerCase()) ||
+                    ingredients.includes(ingredient2.toLowerCase()) ||
+                    ingredients.includes(ingredient3.toLowerCase());
+            });
+
+            if (matchingRecipes.length > 0) {
+                const randomRecipe = matchingRecipes[Math.floor(Math.random() * matchingRecipes.length)];
+                document.getElementById("result").innerHTML = `<p>Random Recipe: ${randomRecipe.title}</p>`;
+            } else {
+                document.getElementById("result").innerHTML = `<p>No recipes found with the specified ingredients.</p>`;
+            }
+        }
+
+        // Function to delete a recipe by index
+        function deleteRecipe(index) {
+            recipes.splice(index, 1);
+            saveRecipesToStorage(recipes);
+            displayRecipeList();
+        }
+
+        // Function to add a new recipe
         function addRecipe(event) {
             event.preventDefault();
 
@@ -168,24 +216,6 @@
             displayRecipeList();
 
             alert("Recepte veiksmīgi pievienota!");
-        }
-
-        function addRow(tableId) {
-            const table = document.getElementById(tableId);
-
-            if (table) {
-                const newRow = table.insertRow(-1);
-
-                if (tableId === 'ingredients-table') {
-                    const cell1 = newRow.insertCell(0);
-                    const cell2 = newRow.insertCell(1);
-                    cell1.innerHTML = '<input type="text" class="ingredient-input awesomplete" placeholder="Sastāvdaļa">';
-                    cell2.innerHTML = '<input type="text" class="quantity-input" placeholder="Daudzums">';
-                } else if (tableId === 'steps-list') {
-                    const cell = newRow.insertCell(0);
-                    cell.innerHTML = `<input type="text" class="step-input" placeholder="Soļa apraksts">`;
-                }
-            }
         }
     </script>
 </head>

@@ -84,6 +84,12 @@
         .recipe-list-ul li {
             margin-bottom: 10px;
         }
+		
+		.remove-button {
+            display: inline-block;
+            margin-left: 10px;
+            cursor: pointer;
+        }
     </style>
 
     <script>
@@ -133,51 +139,67 @@
         }
 
         function addRow(tableId) {
-    const table = document.getElementById(tableId);
-
-    if (table) {
-        if (tableId === 'ingredients-table') {
-            const newRow = table.insertRow();
-            const cell = newRow.insertCell(0);
-
-            const inputIngredient = document.createElement("input");
-            inputIngredient.type = "text";
-            inputIngredient.classList.add("ingredient-input", "awesomplete");
-            inputIngredient.placeholder = "Sastāvdaļa";
-
-            const inputQuantity = document.createElement("input");
-            inputQuantity.type = "text";
-            inputQuantity.classList.add("quantity-input");
-            inputQuantity.placeholder = "Daudzums";
-
-            cell.appendChild(inputIngredient);
-            cell.appendChild(document.createElement("br"));
-            cell.appendChild(document.createTextNode("Daudzums: "));
-            cell.appendChild(inputQuantity);
-        } else if (tableId === 'steps-list') {
-            const ol = table.querySelector("ol");
-            if (ol) {
-                const li = document.createElement("li");
-                const inputStep = document.createElement("input");
-                inputStep.type = "text";
-                inputStep.classList.add("step-input");
-                inputStep.placeholder = "Soļa apraksts";
-
-                li.appendChild(inputStep);
-                ol.appendChild(li);
-            }
-        }
-    }
-}
-
-        function removeRow(tableId) {
             const table = document.getElementById(tableId);
 
             if (table) {
-                const rowCount = table.rows.length;
-                if (rowCount > 2) {
-                    table.deleteRow(rowCount - 1);
+                if (tableId === 'ingredients-table') {
+                    const newRow = table.insertRow();
+                    const cell1 = newRow.insertCell(0);
+                    const cell2 = newRow.insertCell(1);
+
+                    const inputIngredient = document.createElement("input");
+                    inputIngredient.type = "text";
+                    inputIngredient.classList.add("ingredient-input", "awesomplete");
+                    inputIngredient.placeholder = "Sastāvdaļa";
+
+                    const inputQuantity = document.createElement("input");
+                    inputQuantity.type = "text";
+                    inputQuantity.classList.add("quantity-input");
+                    inputQuantity.placeholder = "Daudzums";
+
+                    cell1.appendChild(inputIngredient);
+                    cell2.appendChild(inputQuantity);
+
+                    const removeButton = document.createElement("span");
+                    removeButton.textContent = "❌";
+                    removeButton.classList.add("remove-button");
+                    removeButton.onclick = function () {
+                        removeRow(tableId, newRow.rowIndex);
+                    };
+
+                    newRow.appendChild(removeButton);
+
+                } else if (tableId === 'steps-list') {
+                    const ol = table.querySelector("ol");
+                    if (ol) {
+                        const li = document.createElement("li");
+                        const inputStep = document.createElement("input");
+                        inputStep.type = "text";
+                        inputStep.classList.add("step-input");
+                        inputStep.placeholder = "Soļa apraksts";
+
+                        li.appendChild(inputStep);
+
+                        const removeButton = document.createElement("span");
+                        removeButton.textContent = "❌";
+                        removeButton.classList.add("remove-button");
+                        removeButton.onclick = function () {
+                            removeRow(tableId, li.rowIndex);
+                        };
+
+                        li.appendChild(removeButton);
+
+                        ol.appendChild(li);
+                    }
                 }
+            }
+        }
+
+        function removeRow(tableId, rowIndex) {
+            const table = document.getElementById(tableId);
+
+            if (table && rowIndex > 0) {
+                table.deleteRow(rowIndex);
             }
         }
 

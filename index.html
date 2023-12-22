@@ -223,16 +223,18 @@
     });
 	
 		const recipeListTable = document.getElementById("recipe-list-table");
-    if (recipeListTable) {
-        recipeListTable.addEventListener("click", function (event) {
-            const target = event.target;
-            if (target.tagName === "SPAN" && target.classList.contains("recipe-title")) {
-                const recipeIndex = parseInt(target.getAttribute("data-index"));
-                const selectedRecipe = recipes[recipeIndex];
-                showRecipeDetails(selectedRecipe);
+
+            if (recipeListTable) {
+                recipeListTable.addEventListener("click", function (event) {
+                    const target = event.target;
+                    if (target.tagName === "SPAN" && target.classList.contains("recipe-title")) {
+                        const recipeIndex = parseInt(target.getAttribute("data-index"));
+                        const selectedRecipe = recipes[recipeIndex];
+                        showRecipeDetails(selectedRecipe);
+                    }
+                });
             }
         });
-    }
 		
         const recipesKey = 'prusu_recipes';
 
@@ -419,7 +421,28 @@
             const randomIndex = Math.floor(Math.random() * recipes.length);
             return recipes[randomIndex];
         }
+		
+		function toggleRecipeView() {
+            randomRecipeMode = !randomRecipeMode;
 
+            if (randomRecipeMode) {
+                // Display a random recipe
+                const randomRecipe = getRandomRecipe();
+                showRecipeDetails(randomRecipe);
+            } else {
+                // Clear the result div
+                const resultDiv = document.getElementById("result");
+                if (resultDiv) {
+                    resultDiv.innerHTML = "";
+                }
+            }
+
+            updateToggleButton();
+        }
+		function updateToggleButton() {
+            const buttonText = randomRecipeMode ? "Atrast recepti" : "Aizvērt recepti";
+            document.getElementById("randomRecipeButton").textContent = buttonText;
+        }
         function showRecipeDetails(recipe) {
             const resultDiv = document.getElementById("result");
 

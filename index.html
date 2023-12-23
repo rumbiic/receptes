@@ -499,16 +499,17 @@
             });
 			
 			await fetch('https://api.github.com/repos/rumbiic/receptes/actions/workflows/update-recipes.yml/dispatches', {
-        method: 'POST',
-        headers: {
-            'Authorization': 'Bearer GH_TOKEN',
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            ref: 'main'
-        })
-    });
+    method: 'POST',
+    headers: {
+        'Authorization': 'Bearer GH_TOKEN',
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        ref: 'main',
+        inputs: {} // Add your inputs here if needed
+    }),
+});
 
             // Clear input fields
             newTitleElement.value = '';

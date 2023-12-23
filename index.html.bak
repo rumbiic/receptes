@@ -441,7 +441,7 @@
             }
         }
 
-        function addRecipe(event) {
+        async function addRecipe(event) {
             event.preventDefault();
 
             const newTitleElement = document.getElementById("new-title");

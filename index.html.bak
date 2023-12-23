@@ -496,7 +496,7 @@
 			const response = await fetch('https://api.github.com/repos/rumbiic/receptes/actions/workflows/update-recipes.yml/dispatches', {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer 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`,
+            'Authorization': `Bearer ${{ secrets.GH_TOKEN }}`,
             'Accept': 'application/vnd.github.v3+json',
             'Content-Type': 'application/json',
         },

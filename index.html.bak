@@ -378,12 +378,6 @@
             }
         }
 
-        function removeTestRecipes() {
-            recipes = recipes.filter(recipe => !recipe.test);
-            saveRecipesToStorage(recipes);
-            displayRecipeList();
-        }
-
         function generateRecipe() {
             const ingredient1 = document.getElementById("ingredient1").value;
             const ingredient2 = document.getElementById("ingredient2").value;
@@ -533,9 +527,6 @@
                 input.value = '';
             });
 
-            // Save recipes to local storage
-            saveRecipesToStorage(recipes);
-
             // Display the updated recipe list
             displayRecipeList();
 
@@ -553,11 +544,9 @@
 
         function deleteRecipe(index) {
             recipes.splice(index, 1);
-            saveRecipesToStorage(recipes);
             displayRecipeList();
         }
 
-        saveRecipesToStorage(recipes);
         displayRecipeList();
     </script>
 </head>
